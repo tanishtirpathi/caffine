@@ -16,12 +16,11 @@ const VenueSchema = new Schema<VenueDocument>(
 		images: { type: [String], default:[] }, // images of the venue, imagekit will be used to upload the image and get the url, this url will be stored in the database
 		name: { type: String, required: true, trim: true }, // name of the venue/room
 		building: { type: String, required: true, trim: true },  // builidng in which the venue is located
-		isActive: { type: Boolean, default: true },  // is the venue active or not, if not active then it cannot be booked
 	},
 	{ timestamps: true }  // createdAt and updatedAt will be automatically added to the document
 );
 
 const VenueModel =
-	mongoose.models.Venue || mongoose.model<VenueDocument>("Venue", VenueSchema);
+	mongoose.models.Venue || mongoose.modelSWSW<VenueDocument>("Venue", VenueSchema);
 
 export default VenueModel;
