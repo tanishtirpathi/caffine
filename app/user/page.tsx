@@ -2,9 +2,42 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+type UserProfile = {
+  id: string;
+  name: string;
+  loginId: string;
+  mobileNo: string;
+  role: string;
+};
 
 export default function UserDashboardPage() {
   const router = useRouter();
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("/api/me", { method: "GET" });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch user data");
+        }
+
+        setUser(data.user);
+      } catch (error) {
+        console.error("Failed to fetch user data", error);
+        router.push("/auth/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [router]);
 
   const handleLogout = async () => {
     try {
@@ -25,7 +58,9 @@ export default function UserDashboardPage() {
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-black/55">
               Student dashboard
             </p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tight">Welcome back</h1>
+            <h1 className="mt-2 text-4xl font-bold tracking-tight">
+              {loading ? "Loading..." : `Welcome back, ${user?.name ?? "Student"}`}
+            </h1>
           </div>
           <button
             type="button"
@@ -34,6 +69,34 @@ export default function UserDashboardPage() {
           >
             Logout
           </button>
+        </div>
+
+        <div className="mb-8 rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
+          <h2 className="text-xl font-semibold">My details</h2>
+          {loading ? (
+            <p className="mt-4 text-sm text-black/60">Fetching profile...</p>
+          ) : user ? (
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-black/45">Name</p>
+                <p className="mt-2 text-lg font-medium">{user.name}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-black/45">Role</p>
+                <p className="mt-2 text-lg font-medium capitalize">{user.role}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-black/45">Login ID</p>
+                <p className="mt-2 text-lg font-medium">{user.loginId}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-black/45">Mobile</p>
+                <p className="mt-2 text-lg font-medium">{user.mobileNo}</p>
+              </div>
+            </div>
+          ) : (
+            <p className="mt-4 text-sm text-red-500">Unable to load user details.</p>
+          )}
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
