@@ -1,62 +1,90 @@
-import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongoose';
-import StudentModel from '@/model/students.model';
-import { isLoggedIn } from '@/app/middleware/isLoggedIn';
-import { isTeacher } from '@/app/middleware/isTeacher';
+import { NextResponse } from "next/server";
+
+import dbConnect from "@/lib/monodb";
+import UserModel from "@/modal/user.modal";
+
+import { IsLoggedIn } from "@/app/middleware/isloggedin";
+import { IsAdmin } from "@/app/middleware/isadmin";
+
 export async function POST(request: Request) {
-    //logc now 
-    // db connection 
-    // check if logged in
-    // console the lgoged in user
-    // check if teacher
-    // if no error 
-    // if yes then create student
     try {
+        // Connect to database
         await dbConnect();
 
-        const user = await isLoggedIn();
-         isTeacher(user);
+        // Check if user is logged in
+        const user = await IsLoggedIn();
 
+        // Check if logged-in user is admin
+        IsAdmin(user);
 
-        const { name, rollNo, password  , fatherNo , department, fineReason = 'attendance'  } = await request.json();
+        // Get request body
+        const {
+            name,
+            loginId,
+            password,
+            mobileNo,
+            isAuthorized = false,
+        } = await request.json();
 
-        if (!name || !rollNo || !password) {
+        // Validate required fields
+        if (!name || !loginId || !password || !mobileNo) {
             return NextResponse.json(
-                { message: 'Missing required fields' },
+                {
+                    message: "Name, loginId, password and mobileNo are required",
+                },
                 { status: 400 }
             );
         }
 
-        const existingStudent = await StudentModel.findOne({ rollNo });
-        if (existingStudent) {
+        // Check if loginId already exists
+        const existingLoginId = await UserModel.findOne({ loginId });
+
+        if (existingLoginId) {
             return NextResponse.json(
-                { message: 'Student already exists' },
+                {
+                    message: "Login ID already exists",
+                },
                 { status: 409 }
             );
         }
 
-        const newStudent = new StudentModel({
+
+        // Create new student
+        const newStudent = new UserModel({
             name,
-            rollNo,
+            loginId,
             password,
-            fatherNo, // Add default or required fields as needed
-            department,
-            semester: 1,
-            fineAmount: 0,
-            fineStatus: 'unpaid',
-            fineReason,
-            isCleared: false
+            mobileNo,
+            role: "student",
+            isAuthorized,
         });
 
         await newStudent.save();
+
         return NextResponse.json(
-            { message: 'Student created successfully' },
+            {
+                message: "Student created successfully",
+                user: {
+                    id: newStudent._id,
+                    name: newStudent.name,
+                    loginId: newStudent.loginId,
+                    mobileNo: newStudent.mobileNo,
+                    role: newStudent.role,
+                    isAuthorized: newStudent.isAuthorized,
+                },
+            },
             { status: 201 }
         );
     } catch (error: unknown) {
-        console.error('Signup error:', error);
+        console.error("Create student error:", error);
+
         return NextResponse.json(
-            { message: 'Internal server error' },
+            {
+                message:
+                    error instanceof Error
+                        ? error.message
+                        : "Internal server error",
+            },
             { status: 500 }
         );
     }

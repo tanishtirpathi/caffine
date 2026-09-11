@@ -1,4 +1,4 @@
-export function isTeacher(user: any) {
+export function IsAdmin(user: any) {
 
   if (user.role !== "admin") {
     throw new Error(
