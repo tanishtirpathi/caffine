@@ -8,6 +8,7 @@ export interface UserDocument {
   password: string; // hashed password of the user, not selected by default
   mobileNo: string;
   role: UserRole; 
+  history: mongoose.Types.ObjectId[];
   isAuthorized: boolean; // if role !== "admin" then this need to be true, otherwise cannot book a venue
   createdAt: Date;
   updatedAt: Date;
@@ -24,6 +25,7 @@ const UserSchema = new Schema<UserDocument>(
       enum: ["student", "admin"], // by default student, admin will be created by the system (us)
       default: "student",
     },
+    history: [{ type: Schema.Types.ObjectId, ref: "Booking" }],
 
   // isAuthorized: { type: Boolean, default: false },  // is authorized by admin or not, if not authorized then cannot book a venue
   },
