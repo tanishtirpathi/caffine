@@ -32,7 +32,7 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/login"
+            href="/auth/login"
             className="rounded-lg bg-[#0F172A] px-4 py-2.5 font-medium text-white transition hover:bg-[#1E293B]"
           >
             Login
