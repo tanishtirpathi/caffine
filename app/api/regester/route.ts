@@ -1,90 +1,83 @@
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import dbConnect from "@/lib/monodb";
-import UserModel from "@/modal/user.modal";
+import UserModel, { UserRole } from "@/modal/user.modal";
 
-import { IsLoggedIn } from "@/app/middleware/isloggedin";
-import { IsAdmin } from "@/app/middleware/isadmin";
+function createToken(user: { _id: { toString(): string }; name: string; loginId: string; role: UserRole }) {
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) throw new Error("JWT_SECRET is not configured");
+
+    return jwt.sign(
+        { userId: user._id.toString(), name: user.name, loginId: user.loginId, role: user.role },
+        jwtSecret,
+        { expiresIn: "1d" }
+    );
+}
 
 export async function POST(request: Request) {
     try {
-        // Connect to database
         await dbConnect();
 
-        // Check if user is logged in
-        const user = await IsLoggedIn();
+        const body = await request.json();
+        const name = typeof body.name === "string" ? body.name.trim() : "";
+        const loginId = typeof body.loginId === "string" ? body.loginId.trim() : "";
+        const password = typeof body.password === "string" ? body.password : "";
+        const mobileNo = typeof body.mobileNo === "string" ? body.mobileNo.trim() : "";
+        const role = body.role as UserRole;
 
-        // Check if logged-in user is admin
-        IsAdmin(user);
-
-        // Get request body
-        const {
-            name,
-            loginId,
-            password,
-            mobileNo,
-            isAuthorized = false,
-        } = await request.json();
-
-        // Validate required fields
-        if (!name || !loginId || !password || !mobileNo) {
+        if (!name || !loginId || !password || !mobileNo || !role) {
             return NextResponse.json(
-                {
-                    message: "Name, loginId, password and mobileNo are required",
-                },
+                { message: "name, loginId, password, mobileNo and role are required" },
                 { status: 400 }
             );
         }
 
-        // Check if loginId already exists
-        const existingLoginId = await UserModel.findOne({ loginId });
-
-        if (existingLoginId) {
-            return NextResponse.json(
-                {
-                    message: "Login ID already exists",
-                },
-                { status: 409 }
-            );
+        if (role !== "student" && role !== "admin") {
+            return NextResponse.json({ message: "Invalid role. Use student or admin." }, { status: 400 });
         }
 
+        const existingUser = await UserModel.findOne({ $or: [{ loginId }, { mobileNo }] }).lean();
+        if (existingUser) {
+            return NextResponse.json({ message: "Login ID or mobile number already exists" }, { status: 409 });
+        }
 
-        // Create new student
-        const newStudent = new UserModel({
+        const user = await UserModel.create({
             name,
             loginId,
-            password,
+            password: await bcrypt.hash(password, 12),
             mobileNo,
-            role: "student",
-            isAuthorized,
+            role,
         });
 
-        await newStudent.save();
-
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
-                message: "Student created successfully",
+                message: "Registration successful",
                 user: {
-                    id: newStudent._id,
-                    name: newStudent.name,
-                    loginId: newStudent.loginId,
-                    mobileNo: newStudent.mobileNo,
-                    role: newStudent.role,
-                    isAuthorized: newStudent.isAuthorized,
+                    id: user._id.toString(),
+                    name: user.name,
+                    loginId: user.loginId,
+                    mobileNo: user.mobileNo,
+                    role: user.role,
                 },
             },
             { status: 201 }
         );
-    } catch (error: unknown) {
-        console.error("Create student error:", error);
 
+        response.cookies.set("token", createToken(user), {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24,
+            path: "/",
+        });
+
+        return response;
+    } catch (error: unknown) {
+        console.error("Registration error:", error);
         return NextResponse.json(
-            {
-                message:
-                    error instanceof Error
-                        ? error.message
-                        : "Internal server error",
-            },
+            { message: error instanceof Error ? error.message : "Internal server error" },
             { status: 500 }
         );
     }

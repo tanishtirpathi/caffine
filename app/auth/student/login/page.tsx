@@ -15,7 +15,7 @@ export default function StudentLoginPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/student/login`,
+        "/api/login",
         {
           method: "POST",
           headers: {
@@ -25,6 +25,7 @@ export default function StudentLoginPage() {
           body: JSON.stringify({
             loginId,
             password,
+            role: "student",
           }),
         }
       );
@@ -38,8 +39,7 @@ export default function StudentLoginPage() {
 
       console.log("Student logged in:", data);
 
-      // Later:
-      // router.push("/student/dashboard");
+      router.push("/user");
     } catch (error) {
       console.error(error);
       alert("Something went wrong");
