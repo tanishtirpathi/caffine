@@ -3,42 +3,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#F8FAFC] text-[#0F172A]">
-      {/* Navbar */}
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-lg font-semibold tracking-tight font-serif"
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2563EB]
-           text-sm font-bold text-white">
-            C
-          </span>
-          CampusFlow
-        </Link>
-
-        <div className="hidden items-center gap-8 text-sm text-[#64748B] sm:flex">
-          <Link
-            href="/venues"
-            className="transition hover:text-[#0F172A]"
-          >
-            Venues
-          </Link>
-
-          <Link
-            href="/calendar"
-            className="transition hover:text-[#0F172A]"
-          >
-            Availabe
-          </Link>
-
-          <Link
-            href="/auth/login"
-            className="rounded-lg bg-[#0F172A] px-4 py-2.5 font-medium text-white transition hover:bg-[#1E293B]"
-          >
-            Login
-          </Link>
-        </div>
-      </nav>
 
       {/* Hero */}
       <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-24 pt-24 text-center sm:pt-32">
@@ -60,14 +24,14 @@ export default function Home() {
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
           <Link
-            href="/calendar"
+            href="/dashboard"
             className="rounded-xl bg-[#2563EB] px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1D4ED8]"
           >
             Check availability →
           </Link>
 
           <Link
-            href="/login"
+            href="/auth/login"
             className="rounded-xl border border-[#CBD5E1] bg-white px-6 py-3.5 text-sm font-semibold text-[#0F172A] transition hover:bg-[#F1F5F9]"
           >
             Login to book
@@ -183,7 +147,7 @@ export default function Home() {
           </p>
 
           <Link
-            href="/calendar"
+            href="/dashboard"
             className="mt-7 inline-flex rounded-xl bg-[#2563EB] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#1D4ED8]"
           >
             View campus availability →
