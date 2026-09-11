@@ -21,6 +21,6 @@ const VenueSchema = new Schema<VenueDocument>(
 );
 
 const VenueModel =
-	mongoose.models.Venue || mongoose.modelSWSW<VenueDocument>("Venue", VenueSchema);
+	mongoose.models.Venue || mongoose.model<VenueDocument>("Venue", VenueSchema);
 
 export default VenueModel;
