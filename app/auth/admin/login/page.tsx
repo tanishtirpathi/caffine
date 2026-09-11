@@ -2,8 +2,10 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,7 +20,7 @@ export default function AdminLoginPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/admin/login`,
+        "/api/login",
         {
           method: "POST",
           headers: {
@@ -27,6 +29,7 @@ export default function AdminLoginPage() {
           body: JSON.stringify({
             loginId,
             password,
+            role: "admin",
           }),
         }
       );
@@ -39,8 +42,7 @@ export default function AdminLoginPage() {
 
       console.log("Admin login successful:", data);
 
-      // TODO:
-      // Save authentication information / redirect to admin dashboard
+      router.push("/user");
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "Something went wrong"

@@ -25,7 +25,7 @@ const UserSchema = new Schema<UserDocument>(
       default: "student",
     },
 
-    isAuthorized: { type: Boolean, default: false },  // is authorized by admin or not, if not authorized then cannot book a venue
+  // isAuthorized: { type: Boolean, default: false },  // is authorized by admin or not, if not authorized then cannot book a venue
   },
   {
     timestamps: true, // createdAt and updatedAt will be automatically added to the document

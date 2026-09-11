@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export async function isLoggedIn() {
+export async function IsLoggedIn() {
 
   // GET COOKIE
   const cookieStore =await  cookies();
