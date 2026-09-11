@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type UserRole = "student" | "admin";
 
@@ -12,6 +13,8 @@ interface LoginFormData {
 }
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<LoginFormData>({
     loginId: "",
     password: "",
@@ -61,10 +64,8 @@ export default function LoginPage() {
 
       setSuccess("Login successful.");
 
-      console.log("Login response:", data);
-
-      // Later:
-      // router.push("/dashboard");
+      const targetRoute = data?.user?.role === "admin" ? "/admin" : "/user";
+      router.push(targetRoute);
     } catch (error) {
       setError(
         error instanceof Error
