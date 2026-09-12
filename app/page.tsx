@@ -50,7 +50,7 @@ export default function Home() {
           {/* CTA */}
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/dashboard"
+              href="/venue"
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8B928] px-6 py-3.5 text-sm font-semibold text-[#0B1120] shadow-lg shadow-[#E8B928]/25 transition hover:-translate-y-0.5 hover:bg-[#D9AB1E]"
             >
               Check availability
@@ -68,11 +68,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Small trust text */}
-          <div className="mt-7 flex items-center gap-2 text-sm text-slate-500">
-            <CheckCircle2 size={16} className="text-[#C99A1F]" />
-            Simple booking · Conflict prevention · Campus-wide availability
-          </div>
         </div>
       </section>
 
@@ -136,7 +131,7 @@ export default function Home() {
             </p>
 
             <Link
-              href="/dashboard"
+              href="/venue"
               className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#E8B928] px-6 py-3.5 text-sm font-semibold text-[#0B1120] transition hover:bg-[#D9AB1E]"
             >
               View campus availability

@@ -47,6 +47,17 @@ export default function VenueDetailsPage() {
     if (params.id) loadVenue();
   }, [params.id]);
 
+
+function getTodayDate() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitting(true);
@@ -70,6 +81,10 @@ export default function VenueDetailsPage() {
       if (response.status === 401) {
         setError("You need to log in before booking. Redirecting you to the login page...");
         window.setTimeout(() => router.push("/auth/login"), 1500);
+        return;
+      }
+      if (response.status === 400 && data.message === "Bookings cannot be made for a previous date") {
+        setError(data.message);
         return;
       }
       if (!response.ok) throw new Error(data.message || "Booking request failed");
@@ -109,7 +124,7 @@ export default function VenueDetailsPage() {
               <p className="flex items-center gap-2 text-sm font-semibold text-[#B28713]"><CalendarDays size={17} /> Request this venue</p>
               <h2 className="mt-3 text-2xl font-semibold">Plan your booking</h2>
               <div className="mt-6 space-y-4">
-                <label className="block text-sm font-medium">Date<input required type="date" value={date} min={new Date().toISOString().slice(0, 10)} onChange={(event) => setDate(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
+                <label className="block text-sm font-medium">Date<input required type="date" value={date} min={getTodayDate()} onChange={(event) => setDate(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
                 <div className="grid grid-cols-2 gap-3"><label className="text-sm font-medium">From<select value={startingTime} onChange={(event) => setStartingTime(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 bg-white px-3 py-3"><option value="09:00">09:00</option>{timeSlots.slice(1).map((time) => <option key={time} value={time}>{time}</option>)}</select></label><label className="text-sm font-medium">Until<select value={endingTime} onChange={(event) => setEndingTime(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 bg-white px-3 py-3">{timeSlots.slice(1).map((time) => <option key={time} value={time}>{time}</option>)}</select></label></div>
                 <label className="block text-sm font-medium">Expected attendance<input required type="number" min="1" max={venue.capacity} value={numberOfStudents} onChange={(event) => setNumberOfStudents(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
                 <label className="block text-sm font-medium">What is the event for?<textarea required rows={3} value={reason} onChange={(event) => setReason(event.target.value)} className="mt-2 w-full resize-none rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
