@@ -89,7 +89,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] sm:block"
+                className="hidden rounded-lg px-4 py-2 text-sm font-medium bg-[#0b1120] text-white/60 transition hover:bg-slate-900 hover:text-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] sm:block"
               >
                 Login
               </Link>
