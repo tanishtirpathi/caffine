@@ -52,9 +52,9 @@ export default function UserDashboardPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f7f7f5] px-6 py-12 text-[#171A2B]">
+    <main className="min-h-screen bg-[#f7f7f5] px-6 text-[#171A2B]">
       <Navbar />
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-5xl py-12">
         <div className="mb-8 flex items-center justify-between gap-4">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-black/55">

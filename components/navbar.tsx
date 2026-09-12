@@ -17,8 +17,8 @@ import Name from "./name";
 
 const navigation = [
   { href: "/", label: "Home", icon: House },
-  {href: "/venue", label: "venues", icon: LayoutDashboard},
-  { href: "/user", label: "calendar", icon: Calendar },
+  { href: "/venue", label: "Venues", icon: LayoutDashboard },
+  { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/about", label: "About", icon: Info },
   { href: "/faqs", label: "FAQs", icon: CircleHelp },
 ];
@@ -29,6 +29,7 @@ export default function Navbar() {
   const [user, setUser] = useState<{ name: string; role: string } | null>(null);
 
   const closeMenu = () => setIsMenuOpen(false);
+  const homeHref = user?.role === "admin" ? "/admin" : user ? "/user" : "/";
 
   useEffect(() => {
     let isMounted = true;
@@ -55,7 +56,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 mx-4 rounded-b-2xl border border-t-0 border-slate-200 bg-white/90 shadow-sm shadow-slate-900/5 backdrop-blur-xl sm:mx-10">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link
-          href="/"
+          href={homeHref}
           onClick={closeMenu}
           className="flex items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
         >
@@ -66,10 +67,10 @@ export default function Navbar() {
           {navigation.map(({ href, label, icon: Icon }) => (
             <NavLink
               key={href}
-              href={href}
-              label={label}
+              href={href === "/" ? homeHref : href}
+              label={href === "/" && user ? "Dashboard" : label}
               icon={<Icon size={16} />}
-              active={Boolean(isActive(pathname, href))}
+              active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
             />
           ))}
         </nav>
@@ -77,9 +78,9 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           {user ? (
             <Link
-              href={user.role === "admin" ? "/admin" : "/user"}
-              title={`Open ${user.name}'s dashboard`}
-              aria-label={`Open ${user.name}'s dashboard`}
+              href="/profile"
+              title={`Open ${user.name}'s profile`}
+              aria-label={`Open ${user.name}'s profile`}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B1120] text-white transition hover:bg-[#161f33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
             >
               <UserRound size={19} />
@@ -115,10 +116,10 @@ export default function Navbar() {
           {navigation.map(({ href, label, icon: Icon }) => (
             <MobileNavLink
               key={href}
-              href={href}
-              label={label}
+              href={href === "/" ? homeHref : href}
+              label={href === "/" && user ? "Dashboard" : label}
               icon={<Icon size={17} />}
-              active={Boolean(isActive(pathname, href))}
+              active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
               onClick={closeMenu}
             />
           ))}
