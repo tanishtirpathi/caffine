@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   MapPin,
   Users,
+  X,
 } from "lucide-react";
 import Navbar from "../../../components/navbar";
 
@@ -134,9 +135,9 @@ export default function CreateVenuePage() {
           </section>
 
           {/* Form */}
-          <section className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-9">
+          <section className="rounded-3xl border border-slate-300 bg-white p-6 text-[#101622] shadow-lg shadow-black/5 sm:p-9">
             <div className="mb-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-black/35">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
                 Venue details
               </p>
 
@@ -144,7 +145,7 @@ export default function CreateVenuePage() {
                 Create Venue
               </h2>
 
-              <p className="mt-2 text-sm text-black/45">
+              <p className="mt-2 text-sm text-slate-600">
                 Enter the information below to create a new venue.
               </p>
             </div>
@@ -153,14 +154,14 @@ export default function CreateVenuePage() {
 
               {/* Venue name */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
+                <label className="mb-2 block text-sm font-semibold text-[#101622]">
                   Venue name
                 </label>
 
                 <div className="relative">
                   <Building2
                     size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600"
                   />
 
                   <input
@@ -169,21 +170,21 @@ export default function CreateVenuePage() {
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     required
-                    className="w-full rounded-2xl border border-black/10 bg-[#fafafa] py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30 focus:bg-white"
+                    className="w-full rounded-2xl border border-slate-300 bg-white py-3.5 pl-11 pr-4 text-sm text-[#101622] outline-none transition placeholder:text-slate-500 focus:border-[#101622] focus:ring-2 focus:ring-[#E8B928]/50"
                   />
                 </div>
               </div>
 
               {/* Building */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
+                <label className="mb-2 block text-sm font-semibold text-[#101622]">
                   Building
                 </label>
 
                 <div className="relative">
                   <MapPin
                     size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600"
                   />
 
                   <input
@@ -192,21 +193,21 @@ export default function CreateVenuePage() {
                     value={building}
                     onChange={(event) => setBuilding(event.target.value)}
                     required
-                    className="w-full rounded-2xl border border-black/10 bg-[#fafafa] py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30 focus:bg-white"
+                    className="w-full rounded-2xl border border-slate-300 bg-white py-3.5 pl-11 pr-4 text-sm text-[#101622] outline-none transition placeholder:text-slate-500 focus:border-[#101622] focus:ring-2 focus:ring-[#E8B928]/50"
                   />
                 </div>
               </div>
 
               {/* Capacity */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
+                <label className="mb-2 block text-sm font-semibold text-[#101622]">
                   Capacity
                 </label>
 
                 <div className="relative">
                   <Users
                     size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600"
                   />
 
                   <input
@@ -216,28 +217,31 @@ export default function CreateVenuePage() {
                     value={capacity}
                     onChange={(event) => setCapacity(event.target.value)}
                     required
-                    className="w-full rounded-2xl border border-black/10 bg-[#fafafa] py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30 focus:bg-white"
+                    className="w-full rounded-2xl border border-slate-300 bg-white py-3.5 pl-11 pr-4 text-sm text-[#101622] outline-none transition placeholder:text-slate-500 focus:border-[#101622] focus:ring-2 focus:ring-[#E8B928]/50"
                   />
                 </div>
+                <p className="mt-2 text-xs text-slate-600">
+                  {capacity ? `This venue can host up to ${capacity} people.` : "Enter the maximum number of people this venue can hold."}
+                </p>
               </div>
 
               {/* Images */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
+                <label className="mb-2 block text-sm font-semibold text-[#101622]">
                   Venue images
                 </label>
 
-                <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-black/15 bg-[#fafafa] px-5 py-8 text-center transition hover:border-black/30 hover:bg-white">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black/5">
-                    <FileImage size={21} className="text-black/45" />
+                <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 px-5 py-8 text-center transition hover:border-[#101622] hover:bg-white">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#101622] text-[#E8B928]">
+                    <FileImage size={21} />
                   </div>
 
                   <p className="mt-3 text-sm font-medium">
                     Choose venue images
                   </p>
 
-                  <p className="mt-1 text-xs text-black/40">
-                    You can select multiple images
+                  <p className="mt-1 text-xs text-slate-600">
+                    Select one or more JPG, PNG, or WEBP images
                   </p>
 
                   <input
@@ -255,11 +259,28 @@ export default function CreateVenuePage() {
                 </label>
 
                 {selectedImages.length > 0 && (
-                  <div className="mt-3 rounded-xl bg-black/5 px-4 py-3">
-                    <p className="text-xs font-medium">
+                  <div className="mt-3 space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3">
+                    <p className="text-xs font-semibold text-[#101622]">
                       {selectedImages.length} image
                       {selectedImages.length > 1 ? "s" : ""} selected
                     </p>
+                    {selectedImages.map((image, index) => (
+                      <div key={`${image.name}-${image.lastModified}`} className="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2 text-xs text-slate-700">
+                        <span className="min-w-0 truncate">{image.name}</span>
+                        <button
+                          type="button"
+                          aria-label={`Remove ${image.name}`}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            setSelectedImages((current) => current.filter((_, imageIndex) => imageIndex !== index));
+                          }}
+                          className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                        >
+                          <X size={15} />
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -298,7 +319,7 @@ export default function CreateVenuePage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-black px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#101622] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#263246] focus:outline-none focus:ring-2 focus:ring-[#E8B928] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {loading ? "Creating..." : "Create Venue"}
                 {!loading && <ArrowRight size={16} />}

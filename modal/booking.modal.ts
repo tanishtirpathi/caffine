@@ -12,7 +12,7 @@ export interface BookingDocument {
 	user_id: mongoose.Types.ObjectId;
 	starting_time: string;
 	ending_time: string;
-	date: Date;
+	date: string;
 	numberofStudents: number;
 	status: BookingStatus;
 	reason: string;
@@ -36,8 +36,6 @@ const BookingSchema = new Schema<BookingDocument>(
 		ending_time: { type: String, required: true , enum: [ "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]},
 		date: { type:String, required: true },
 		numberofStudents: { type: Number, min: 1, required: true },
-		 // ~~~ no of students that will be attending the event, 
-		// ~~~ if numberOfStudents > venue's capacity,reject the booking 
 		status: {
 			type: String,
 			enum: ["pending", "approved", "rejected", "cancelled", "completed"], // approved by admin, rejected by admin, cancelled by user, completed after the booking is done

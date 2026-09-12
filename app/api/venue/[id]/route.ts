@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 
 import dbConnect from "@/lib/monodb";
+import BookingModel from "@/modal/booking.modal";
 import VenueModel from "@/modal/venue.modal";
 import { IsLoggedIn } from "@/app/middleware/isloggedin";
 
@@ -57,6 +58,8 @@ export async function DELETE(_request: Request, context: RouteContext) {
         if (!venue) {
             return NextResponse.json({ message: "Venue not found" }, { status: 404 });
         }
+
+        await BookingModel.deleteMany({ venue_id: id });
 
         return NextResponse.json(
             { message: "Venue deleted successfully", venue },
