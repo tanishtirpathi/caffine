@@ -21,10 +21,18 @@ type Venue = {
   isActive?: boolean;
 };
 
+const capacityFilters = [
+  { label: "All capacities", min: 0, max: Infinity },
+  { label: "0–100", min: 0, max: 100 },
+  { label: "101–250", min: 101, max: 250 },
+  { label: "251–500", min: 251, max: 500 },
+  { label: "500+", min: 501, max: Infinity },
+];
+
 export default function VenuePage() {
   const [venues, setVenues] = useState<Venue[]>([]);
   const [search, setSearch] = useState("");
-  const [selectedBuilding, setSelectedBuilding] = useState("All venues");
+  const [selectedCapacity, setSelectedCapacity] = useState("All capacities");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -53,25 +61,23 @@ export default function VenuePage() {
     loadVenues();
   }, []);
 
-  const buildings = useMemo(
-    () => ["All venues", ...new Set(venues.map((venue) => venue.building))],
-    [venues],
-  );
-
   const filteredVenues = useMemo(() => {
     const query = search.trim().toLowerCase();
+    const capacityFilter = capacityFilters.find(
+      (filter) => filter.label === selectedCapacity,
+    ) ?? capacityFilters[0];
 
     return venues.filter((venue) => {
       const matchesSearch =
         !query ||
         venue.name.toLowerCase().includes(query) ||
         venue.building.toLowerCase().includes(query);
-      const matchesBuilding =
-        selectedBuilding === "All venues" || venue.building === selectedBuilding;
+      const matchesCapacity =
+        venue.capacity >= capacityFilter.min && venue.capacity <= capacityFilter.max;
 
-      return matchesSearch && matchesBuilding && venue.isActive !== false;
+      return matchesSearch && matchesCapacity && venue.isActive !== false;
     });
-  }, [search, selectedBuilding, venues]);
+  }, [search, selectedCapacity, venues]);
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#171A2B]">
@@ -116,15 +122,15 @@ export default function VenuePage() {
               Popular spaces
             </h2>
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Filter by building">
-            {buildings.map((building) => (
+          <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Filter by venue capacity">
+            {capacityFilters.map((filter) => (
               <button
-                key={building}
+                key={filter.label}
                 type="button"
-                onClick={() => setSelectedBuilding(building)}
-                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition ${selectedBuilding === building ? "border-[#101622] bg-[#101622] text-white" : "border-black/10 bg-white text-slate-600 hover:border-black/30"}`}
+                onClick={() => setSelectedCapacity(filter.label)}
+                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition ${selectedCapacity === filter.label ? "border-[#101622] bg-[#101622] text-white" : "border-black/10 bg-white text-slate-600 hover:border-black/30"}`}
               >
-                {building}
+                {filter.label}
               </button>
             ))}
           </div>
@@ -146,7 +152,7 @@ export default function VenuePage() {
             <Building2 className="mx-auto text-slate-400" size={28} />
             <h3 className="mt-4 text-lg font-semibold">No venues found</h3>
             <p className="mt-2 text-sm text-slate-500">
-              Try a different search term or choose another building.
+              Try a different search term or choose another capacity range.
             </p>
           </div>
         ) : (

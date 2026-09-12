@@ -19,8 +19,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "CampusFlow",
-  description: "Smart campus resource booking and conflict management",
+  title: "Bookspot",
+  description: "your campuse , one Book spot ",
+
+  icons: {
+    icon: "/icon.webp",
+    shortcut: "/icon.webp",
+    apple: "/icon.webp",
+  },
 };
 
 export default function RootLayout({
