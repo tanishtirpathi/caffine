@@ -19,8 +19,8 @@ export default function Home() {
       {/* HEADER */}
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Link href="/" className="flex items-center">
-            <Name />
+          <Link href="/" className=" flex items-center">
+            <Name scale={0.7} />
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">
