@@ -182,7 +182,7 @@ export default function LoginPage() {
         </form>
 
         {/* Register */}
-        <p className="mt-6 text-center text-sm text-gray-500">
+        {/* <p className="mt-6 text-center text-sm text-gray-500">
           Dont have an account?{" "}
           <Link
             href="/auth/register"
@@ -190,7 +190,7 @@ export default function LoginPage() {
           >
             Register as Student
           </Link>
-        </p>
+        </p> */}
       </div>
     </main>
   );

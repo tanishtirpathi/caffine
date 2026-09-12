@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "imagekit": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.45.0",
     "mongoose": "^9.10.0",

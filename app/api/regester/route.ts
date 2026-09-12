@@ -22,12 +22,14 @@ export async function POST(request: Request) {
 
         const body = await request.json();
         const name = typeof body.name === "string" ? body.name.trim() : "";
-        const loginId = typeof body.loginId === "string" ? body.loginId.trim() : "";
         const password = typeof body.password === "string" ? body.password : "";
         const mobileNo = typeof body.mobileNo === "string" ? body.mobileNo.trim() : "";
-        const role = body.role as UserRole;
+        const role = (body.role || "student") as UserRole ; //default student if not given any role while register
+        
+        const random5 = Math.floor(1000 + Math.random() * 90000);
+        const loginId = `${name}${random5}`; //random loginId for user [name + 5 random number]
 
-        if (!name || !loginId || !password || !mobileNo || !role) {
+        if (!name || !password || !mobileNo || !role) {
             return NextResponse.json(
                 { message: "name, loginId, password, mobileNo and role are required" },
                 { status: 400 }
