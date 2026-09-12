@@ -20,7 +20,6 @@ const VenueSchema = new Schema<VenueDocument>(
 	{ timestamps: true }  // createdAt and updatedAt will be automatically added to the document
 );
 
-const VenueModel =
-	mongoose.models.Venue || mongoose.modelSWSW<VenueDocument>("Venue", VenueSchema);
+const VenueModel = mongoose.models.Venue || mongoose.model<VenueDocument>("Venue", VenueSchema);
 
 export default VenueModel;
