@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Navbar from "../../components/navbar";
 
 type UserProfile = {
   id: string;
@@ -52,6 +53,7 @@ export default function UserDashboardPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] px-6 py-12 text-[#171A2B]">
+      <Navbar />
       <div className="mx-auto max-w-5xl">
         <div className="mb-8 flex items-center justify-between gap-4">
           <div>
