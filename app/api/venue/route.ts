@@ -1,21 +1,52 @@
 import { NextResponse } from "next/server";
-
+import { getRedisClient } from "@/lib/redis";
 import dbConnect from "@/lib/monodb";
 import VenueModel from "@/modal/venue.modal";
 import { IsLoggedIn } from "@/app/middleware/isloggedin";
 
+
+const CACHE_KEY = "venues:all";
+const CACHE_TTL = 60;
+
+
 export async function GET() {
 	try {
+		  const redis = await getRedisClient();
+
+        const cachedVenues = await redis.get(CACHE_KEY);
+
+        if (cachedVenues) {
+            console.log("🔥 Redis HIT");
+
+            return NextResponse.json(
+                {
+                    venues: JSON.parse(cachedVenues),
+                },
+                { status: 200 }
+            );
+        }
+
+        console.log("🐢 Redis MISS → MongoDB");
+
 		await dbConnect();
 
 		const venues = await VenueModel.find({}).sort({ createdAt: -1 }).lean();
 
+
+		 await redis.set(
+            CACHE_KEY,
+            JSON.stringify(venues),
+            {
+                EX: CACHE_TTL,
+            }
+        );
+
 		return NextResponse.json(
-			{
-				venues,
-			},
-			{ status: 200 }
-		);
+            {
+                venues,
+            },
+            { status: 200 }
+        );
 	} catch (error: unknown) {
 		console.error("Get venues error:", error);
 
