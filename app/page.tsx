@@ -69,7 +69,7 @@ export default function Home() {
 
           <p className="mt-4 text-base leading-7 text-slate-600">
             CampusFlow keeps the entire booking process simple while helping
-            prevent scheduling conflicts.
+            prevent scheduling conflicts
           </p>
         </div>
 
