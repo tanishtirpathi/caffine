@@ -7,11 +7,12 @@ import {
   Info,
   LayoutDashboard,
   Menu,
+  UserRound,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Name from "./name";
 
 const navigation = [
@@ -25,8 +26,30 @@ const navigation = [
 export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<{ name: string; role: string } | null>(null);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetch("/api/me")
+      .then(async (response) => {
+        if (!response.ok) return null;
+        const data = await response.json();
+        return data.user as { name: string; role: string } | undefined;
+      })
+      .then((currentUser) => {
+        if (isMounted) setUser(currentUser ?? null);
+      })
+      .catch(() => {
+        if (isMounted) setUser(null);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-50 mx-4 rounded-b-2xl border border-t-0 border-slate-200 bg-white/90 shadow-sm shadow-slate-900/5 backdrop-blur-xl sm:mx-10">
@@ -52,18 +75,25 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/auth/login"
-            className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] sm:block"
-          >
-            Login
-          </Link>
-          <Link
-            href="/auth/register"
-            className="rounded-lg bg-[#0B1120] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#161f33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
-          >
-            Get started
-          </Link>
+          {user ? (
+            <Link
+              href={user.role === "admin" ? "/admin" : "/user"}
+              title={`Open ${user.name}'s dashboard`}
+              aria-label={`Open ${user.name}'s dashboard`}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B1120] text-white transition hover:bg-[#161f33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
+            >
+              <UserRound size={19} />
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] sm:block"
+              >
+                Login
+              </Link>
+            </>
+          )}
           <button
             type="button"
             aria-expanded={isMenuOpen}
