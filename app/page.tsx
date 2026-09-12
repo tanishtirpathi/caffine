@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import Name from "../components/name";
 
@@ -15,11 +14,11 @@ import {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F8FAFC] text-[#111827]">
+    <main className="min-h-screen bg-white text-[#0B1120]">
       {/* HEADER */}
-      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl">
+      <header className="sticky top-5 z-50 border border-slate-200 bg-white/90 backdrop-blur-xl mx-10 rounded-2xl shadow-sm shadow-slate-900/5">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Link href="/" className=" flex items-center">
+          <Link href="/" className="flex items-center">
             <Name scale={0.7} />
           </Link>
 
@@ -41,22 +40,22 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Link
               href="/auth/login"
-              className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:block"
+              className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120] sm:block"
             >
               Login
             </Link>
 
             <Link
               href="/auth/register"
-              className="rounded-lg bg-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-500/20 transition hover:bg-[#1D4ED8] hover:shadow-md"
+              className="rounded-lg bg-[#0B1120] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#161f33]"
             >
-              Get Started
+              Get started
             </Link>
           </div>
         </div>
 
         {/* MOBILE NAV */}
-        <div className="border-t border-slate-200/70 md:hidden">
+        <div className="border-t border-slate-200 md:hidden">
           <nav className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 py-2">
             <MobileNavLink href="/" icon={<House size={15} />} label="Home" />
             <MobileNavLink
@@ -80,21 +79,12 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-blue-100/50 blur-3xl" />
+        <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[480px] w-[680px] -translate-x-1/2 rounded-full bg-[#E8B928]/10 blur-3xl" />
 
-        <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-20 pt-20 text-center sm:pt-28">
-          {/* Badge */}
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700">
-            <span className="h-2 w-2 rounded-full bg-blue-600" />
-            Smart campus resource management
-          </div>
-
-          <h1 className="max-w-4xl text-5xl font-semibold leading-[1.05] tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-7xl">
+        <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-20 pt-20 text-center sm:pt-28">  
+          <h1 className="max-w-4xl text-5xl font-semibold leading-[1.05] tracking-[-0.045em] text-[#0B1120] sm:text-6xl lg:text-7xl">
             Campus booking,
-            <span className="block text-[#2563EB]">
-              without the chaos.
-            </span>
+            <span className="block">without the chaos.</span>
           </h1>
 
           <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
@@ -106,7 +96,7 @@ export default function Home() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/dashboard"
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#111827] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-black"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8B928] px-6 py-3.5 text-sm font-semibold text-[#0B1120] shadow-lg shadow-[#E8B928]/25 transition hover:-translate-y-0.5 hover:bg-[#D9AB1E]"
             >
               Check availability
               <ArrowRight
@@ -117,7 +107,7 @@ export default function Home() {
 
             <Link
               href="/auth/login"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-[#0B1120] shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
             >
               Login to book
             </Link>
@@ -125,7 +115,7 @@ export default function Home() {
 
           {/* Small trust text */}
           <div className="mt-7 flex items-center gap-2 text-sm text-slate-500">
-            <CheckCircle2 size={16} className="text-blue-600" />
+            <CheckCircle2 size={16} className="text-[#C99A1F]" />
             Simple booking · Conflict prevention · Campus-wide availability
           </div>
         </div>
@@ -143,11 +133,9 @@ export default function Home() {
       {/* FEATURES / HOW IT WORKS */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-            How it works
-          </p>
+          <p className="text-sm font-semibold text-[#C99A1F]">How it works</p>
 
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#0B1120] sm:text-4xl">
             Everything you need to manage campus bookings.
           </h2>
 
@@ -183,11 +171,11 @@ export default function Home() {
 
       {/* CTA */}
       <section className="px-6 pb-20">
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-[#111827] px-6 py-16 text-center sm:px-12">
-          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 rounded-full bg-blue-600/30 blur-3xl" />
+        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-[#0B1120] px-6 py-16 text-center sm:px-12">
+          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 rounded-full bg-[#E8B928]/20 blur-3xl" />
 
           <div className="relative">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-400">
+            <p className="text-sm font-semibold text-[#E8B928]">
               Ready to book?
             </p>
 
@@ -202,7 +190,7 @@ export default function Home() {
 
             <Link
               href="/dashboard"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#E8B928] px-6 py-3.5 text-sm font-semibold text-[#0B1120] transition hover:bg-[#D9AB1E]"
             >
               View campus availability
               <ArrowRight size={17} />
@@ -236,7 +224,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950"
+      className="flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120]"
     >
       {icon}
       {label}
@@ -271,7 +259,7 @@ function MobileNavLink({
 function Stat({ number, label }: { number: string; label: string }) {
   return (
     <div className="border-b border-slate-200 px-6 py-8 text-center last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-      <p className="text-3xl font-semibold tracking-tight text-slate-950">
+      <p className="text-3xl font-semibold tracking-tight text-[#0B1120]">
         {number}
       </p>
 
@@ -294,9 +282,9 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-100/50">
+    <div className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#E8B928]/50 hover:shadow-lg hover:shadow-[#E8B928]/10">
       <div className="flex items-center justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0B1120] text-[#E8B928]">
           {icon}
         </div>
 
@@ -305,7 +293,7 @@ function FeatureCard({
         </span>
       </div>
 
-      <h3 className="mt-7 text-lg font-semibold text-slate-950">{title}</h3>
+      <h3 className="mt-7 text-lg font-semibold text-[#0B1120]">{title}</h3>
 
       <p className="mt-3 text-sm leading-6 text-slate-500">{description}</p>
     </div>
