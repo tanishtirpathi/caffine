@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Navbar from "../components/navbar";
 
 import {
@@ -9,6 +13,21 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then(async (response) => {
+        if (!response.ok) return null;
+        const data = await response.json();
+        return data.user as { role?: string } | undefined;
+      })
+      .then((user) => {
+        if (user) router.replace(user.role === "admin" ? "/admin" : "/user");
+      })
+      .catch(() => undefined);
+  }, [router]);
+
   return (
     <main className="min-h-screen bg-white text-[#0B1120]">
       <Navbar />

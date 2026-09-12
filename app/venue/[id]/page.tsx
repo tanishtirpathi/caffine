@@ -68,7 +68,8 @@ export default function VenueDetailsPage() {
       });
       const data = await response.json();
       if (response.status === 401) {
-        router.push("/auth/login");
+        setError("You need to log in before booking. Redirecting you to the login page...");
+        window.setTimeout(() => router.push("/auth/login"), 1500);
         return;
       }
       if (!response.ok) throw new Error(data.message || "Booking request failed");
