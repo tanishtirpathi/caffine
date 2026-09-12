@@ -1,12 +1,8 @@
-import Link from "next/link";
-import Name from "../../components/name";
+import Navbar from "../../components/navbar";
 import {
-	CircleHelp,
 	Code2,
 	Database,
-	House,
 	Info,
-	LayoutDashboard,
 	Search,
 	Users,
 } from "lucide-react";
@@ -68,47 +64,7 @@ const team = [
 export default function AboutPage() {
 	return (
 		<main className="min-h-screen bg-white text-[#0B1120]">
-			<header className="sticky top-5 z-50 mx-4 rounded-2xl border border-slate-200 bg-white/90 shadow-sm shadow-slate-900/5 backdrop-blur-xl sm:mx-10">
-				<div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
-					<Link
-						href="/"
-						className="flex items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
-					>
-						<Name scale={0.7} />
-					</Link>
-
-					<nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
-						<NavLink href="/" icon={<House size={16} />} label="Home" />
-						<NavLink href="/dashboard" icon={<LayoutDashboard size={16} />} label="Dashboard" />
-						<NavLink href="/about" icon={<Info size={16} />} label="About" active />
-						<NavLink href="/faqs" icon={<CircleHelp size={16} />} label="FAQs" />
-					</nav>
-
-					<div className="flex items-center gap-2">
-						<Link
-							href="/auth/login"
-							className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] sm:block"
-						>
-							Login
-						</Link>
-						<Link
-							href="/auth/register"
-							className="rounded-lg bg-[#0B1120] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#161f33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
-						>
-							Get started
-						</Link>
-					</div>
-				</div>
-
-				<div className="border-t border-slate-200 md:hidden">
-					<nav className="flex items-center gap-1 overflow-x-auto px-4 py-2" aria-label="Mobile navigation">
-						<MobileNavLink href="/" icon={<House size={15} />} label="Home" />
-						<MobileNavLink href="/dashboard" icon={<LayoutDashboard size={15} />} label="Dashboard" />
-						<MobileNavLink href="/about" icon={<Info size={15} />} label="About" active />
-						<MobileNavLink href="/faqs" icon={<CircleHelp size={15} />} label="FAQs" />
-					</nav>
-				</div>
-			</header>
+			<Navbar />
 
 			{/* HERO */}
 			<section className="relative overflow-hidden border-b border-slate-200 bg-[#F6F6F3]">
@@ -232,53 +188,5 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 			<span className="h-[3px] w-6 rounded-full bg-[#E8B928]" />
 			<p className="text-sm font-semibold text-[#B28713]">{children}</p>
 		</div>
-	);
-}
-
-function NavLink({
-	href,
-	icon,
-	label,
-	active = false,
-}: {
-	href: string;
-	icon: React.ReactNode;
-	label: string;
-	active?: boolean;
-}) {
-	return (
-		<Link
-			href={href}
-			className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] ${
-				active ? "bg-slate-100 text-[#0B1120]" : "text-slate-600 hover:bg-slate-100 hover:text-[#0B1120]"
-			}`}
-		>
-			{icon}
-			{label}
-		</Link>
-	);
-}
-
-function MobileNavLink({
-	href,
-	icon,
-	label,
-	active = false,
-}: {
-	href: string;
-	icon: React.ReactNode;
-	label: string;
-	active?: boolean;
-}) {
-	return (
-		<Link
-			href={href}
-			className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition ${
-				active ? "bg-slate-100 text-[#0B1120]" : "text-slate-600 hover:bg-slate-100"
-			}`}
-		>
-			{icon}
-			{label}
-		</Link>
 	);
 }

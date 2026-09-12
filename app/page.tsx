@@ -1,11 +1,7 @@
 import Link from "next/link";
-import Name from "../components/name";
+import Navbar from "../components/navbar";
 
 import {
-  CircleHelp,
-  House,
-  Info,
-  LayoutDashboard,
   ArrowRight,
   CheckCircle2,
   CalendarDays,
@@ -15,76 +11,16 @@ import {
 export default function Home() {
   return (
     <main className="min-h-screen bg-white text-[#0B1120]">
-      {/* HEADER */}
-      <header className="sticky top-5 z-50 border border-slate-200 bg-white/90 backdrop-blur-xl mx-10 rounded-2xl shadow-sm shadow-slate-900/5">
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Link href="/" className="flex items-center">
-            <Name scale={0.7} />
-          </Link>
-
-          <nav className="hidden items-center gap-1 md:flex">
-            <NavLink href="/" icon={<House size={16} />} label="Home" />
-            <NavLink
-              href="/dashboard"
-              icon={<LayoutDashboard size={16} />}
-              label="Dashboard"
-            />
-            <NavLink href="/about" icon={<Info size={16} />} label="About" />
-            <NavLink
-              href="/faqs"
-              icon={<CircleHelp size={16} />}
-              label="FAQs"
-            />
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <Link
-              href="/auth/login"
-              className="hidden rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120] sm:block"
-            >
-              Login
-            </Link>
-
-            <Link
-              href="/auth/register"
-              className="rounded-lg bg-[#0B1120] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#161f33]"
-            >
-              Get started
-            </Link>
-          </div>
-        </div>
-
-        {/* MOBILE NAV */}
-        <div className="border-t border-slate-200 md:hidden">
-          <nav className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 py-2">
-            <MobileNavLink href="/" icon={<House size={15} />} label="Home" />
-            <MobileNavLink
-              href="/dashboard"
-              icon={<LayoutDashboard size={15} />}
-              label="Dashboard"
-            />
-            <MobileNavLink
-              href="/about"
-              icon={<Info size={15} />}
-              label="About"
-            />
-            <MobileNavLink
-              href="/faqs"
-              icon={<CircleHelp size={15} />}
-              label="FAQs"
-            />
-          </nav>
-        </div>
-      </header>
+      <Navbar />
 
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[480px] w-[680px] -translate-x-1/2 rounded-full bg-[#E8B928]/10 blur-3xl" />
 
         <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-20 pt-20 text-center sm:pt-28">  
-          <h1 className="max-w-4xl text-5xl font-semibold leading-[1.05] tracking-[-0.045em] text-[#0B1120] sm:text-6xl lg:text-7xl">
-            Campus booking,
-            <span className="block">without the chaos.</span>
+          <h1 className="max-w-4xl text-5xl leading-[1.05] tracking-[-0.045em] text-[#0B1120] sm:text-6xl lg:text-7xl">
+            <span className="block font-serif italic font-light">Your campus </span>
+            <span className="block">One Booking spot </span>
           </h1>
 
           <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
@@ -121,14 +57,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS */}
-      <section className="border-y border-slate-200 bg-white">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 sm:grid-cols-3">
-          <Stat number="24" label="Active venues" />
-          <Stat number="12" label="Bookings today" />
-          <Stat number="3" label="Pending requests" />
-        </div>
-      </section>
 
       {/* FEATURES / HOW IT WORKS */}
       <section className="mx-auto max-w-6xl px-6 py-24">
@@ -207,50 +135,6 @@ export default function Home() {
         </div>
       </footer>
     </main>
-  );
-}
-
-/* NAV LINK */
-
-function NavLink({
-  href,
-  icon,
-  label,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0B1120]"
-    >
-      {icon}
-      {label}
-    </Link>
-  );
-}
-
-/* MOBILE NAV */
-
-function MobileNavLink({
-  href,
-  icon,
-  label,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100"
-    >
-      {icon}
-      {label}
-    </Link>
   );
 }
 
