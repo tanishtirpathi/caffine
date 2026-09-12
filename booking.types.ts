@@ -4,7 +4,7 @@ export type BookingRequest = {
     endingTime: string;
     reason: string;
     numberOfStudents: number;
-    date: Date;
+    date: string;
 };
 
 export type BookingTime = 

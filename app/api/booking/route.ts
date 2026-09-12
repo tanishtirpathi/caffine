@@ -26,7 +26,7 @@ type BookingData = {
 	venueId: string;
 	startingTime: (typeof validTimes)[number];
 	endingTime: (typeof validTimes)[number];
-	date: Date;
+	date: string;
 	numberOfStudents: number;
 	reason: string;
 };
@@ -40,8 +40,8 @@ function getUserId(session: unknown) {
 	return typeof userId === "string" && mongoose.isValidObjectId(userId) ? userId : null;
 }
 //! ending time and starting time management 
-function getDayRange(date: Date) {
-    const start = new Date(date);
+function getDayRange(date: string) {
+	const start = new Date(`${date}T00:00:00.000Z`);
     start.setUTCHours(0, 0, 0, 0);
 
     const end = new Date(start);
@@ -49,46 +49,70 @@ function getDayRange(date: Date) {
 
     return { start, end };
 }
+
+function isBeforeToday(date: Date) {
+	const today = new Date();
+	const todayKey = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+	const bookingKey = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+
+	return bookingKey < todayKey;
+}
 //! this is the data we are getting from frontend and I am validating and this is purely ai writtern
 function parseBookingData(value: unknown): BookingData | null {
-	if (typeof value !== "object" || value === null) {
-		return null;
-	}
+    if (typeof value !== "object" || value === null) {
+        return null;
+    }
 
-	const body = value as Record<string, unknown>;
-	const startingTime = body.startingTime;
-	const endingTime = body.endingTime;
-	const date = typeof body.date === "string" ? new Date(body.date) : null;
-	const numberOfStudents = body.numberOfStudents;
-	const reason = typeof body.reason === "string" ? body.reason.trim() : "";
+    const body = value as Record<string, unknown>;
 
-	if (
-		typeof body.venueId === "string" &&
-		mongoose.isValidObjectId(body.venueId) &&
-		typeof startingTime === "string" &&
-		validTimes.includes(startingTime as (typeof validTimes)[number]) &&
-		typeof endingTime === "string" &&
-		validTimes.includes(endingTime as (typeof validTimes)[number]) &&
-		validTimes.indexOf(startingTime as (typeof validTimes)[number]) <
-			validTimes.indexOf(endingTime as (typeof validTimes)[number]) &&
-		date !== null &&
-		!Number.isNaN(date.getTime()) &&
-		Number.isInteger(numberOfStudents) &&
-		(numberOfStudents as number) > 0 &&
-		Boolean(reason)
-	) {
-		return {
-			venueId: body.venueId,
-			startingTime: startingTime as BookingData["startingTime"],
-			endingTime: endingTime as BookingData["endingTime"],
-			date,
-			numberOfStudents: numberOfStudents as number,
-			reason,
-		};
-	}
+    const startingTime = body.startingTime;
+    const endingTime = body.endingTime;
+    const date = typeof body.date === "string" ? body.date : "";
+    const numberOfStudents = body.numberOfStudents;
+    const reason =
+        typeof body.reason === "string" ? body.reason.trim() : "";
 
-	return null;
+    const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
+
+    if (
+        typeof body.venueId === "string" &&
+        mongoose.isValidObjectId(body.venueId) &&
+        typeof startingTime === "string" &&
+        validTimes.includes(startingTime as (typeof validTimes)[number]) &&
+        typeof endingTime === "string" &&
+        validTimes.includes(endingTime as (typeof validTimes)[number]) &&
+        validTimes.indexOf(startingTime as (typeof validTimes)[number]) <
+            validTimes.indexOf(endingTime as (typeof validTimes)[number]) &&
+        isValidDate &&
+        Number.isInteger(numberOfStudents) &&
+        (numberOfStudents as number) > 0 &&
+        Boolean(reason)
+    ) {
+        return {
+            venueId: body.venueId,
+            startingTime: startingTime as BookingData["startingTime"],
+            endingTime: endingTime as BookingData["endingTime"],
+            date,
+            numberOfStudents: numberOfStudents as number,
+            reason,
+        };
+    }
+
+    return null;
 }
+
+//! India time zone 
+
+function getTodayIST(): string {
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Kolkata",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).format(new Date());
+}
+
+
 //! this will get out booking history of the user 
 export async function GET() {
     //* algoritgm 
@@ -143,7 +167,13 @@ export async function POST(request: Request) {
 				{ message: "venueId, date, valid time range, numberOfStudents and reason are required" },
 				{ status: 400 }
 			);
-		}
+			}
+			if (bookingData.date < getTodayIST()) {
+				return NextResponse.json(
+					{ message: "Bookings cannot be made for a previous date" },
+					{ status: 400 }
+				);
+			}
 
 		await dbConnect();
 

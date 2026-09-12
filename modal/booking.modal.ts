@@ -34,7 +34,7 @@ const BookingSchema = new Schema<BookingDocument>(
 		},
 		starting_time: { type: String, required: true,  enum: [ "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]},
 		ending_time: { type: String, required: true , enum: [ "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]},
-		date: { type: Date, required: true },
+		date: { type:String, required: true },
 		numberofStudents: { type: Number, min: 1, required: true },
 		 // ~~~ no of students that will be attending the event, 
 		// ~~~ if numberOfStudents > venue's capacity,reject the booking 
