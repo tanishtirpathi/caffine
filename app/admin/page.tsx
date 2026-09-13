@@ -11,6 +11,7 @@ import {
   Filter,
   LogOut,
   MapPin,
+  Plus,
   Search,
   ShieldCheck,
   UserRound,
@@ -130,8 +131,11 @@ export default function AdminDashboardPage() {
             <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">Review the campus at a glance.</h1>
             <p className="mt-3 text-slate-500">Approve requests, watch venue activity, and keep campus bookings moving.</p>
           </div>
+<div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Link href="/admin/create-venue" className="inline-flex items-center gap-2 rounded-xl bg-[#E8B928] px-4 py-3 text-sm font-semibold text-[#101622] transition hover:bg-[#d9ab1e]"><Plus size={16} /> create a venue</Link>
           <button type="button" onClick={handleLogout} className="inline-flex items-center gap-2 self-start rounded-xl border border-black/10 bg-white px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-red-200 hover:text-red-600 sm:self-auto"><LogOut size={16} /> Sign out</button>
-        </header>
+     </div>
+             </header>
 
         {error && <div className="mt-8 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}
 
@@ -159,6 +163,7 @@ export default function AdminDashboardPage() {
         </section>
 
         <section className="mt-8 grid gap-6 lg:grid-cols-2">
+         <AdminLink href="/admin/manage-venue" icon={<Building2 size={20} />} title="manage venues" description="Add new campus spaces and keep capacity information current." />
           <AdminLink href="/admin/create-venue" icon={<Building2 size={20} />} title="create venues" description="Add new campus spaces and keep capacity information current." />
           <AdminLink href="/admin/users" icon={<ShieldCheck size={20} />} title="Manage users" description="Review accounts and authorization status across the campus." />
         </section>
