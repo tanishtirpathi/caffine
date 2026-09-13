@@ -4,6 +4,10 @@ Bookspot is a campus venue booking platform. Students find and book shared space
 
 ---
 
+[![Visit Bookspot](https://img.shields.io/badge/Live%20Demo-bookspot.me-E8B928?style=for-the-badge)](https://bookspot.me)
+
+![Bookspot Open Graph preview](./public/OG.png)
+
 ## The Problem
 
 Booking a campus venue is usually messy — spread across group chats, spreadsheets, and manual checks. This causes three issues:
@@ -87,7 +91,7 @@ Browser
         +-- Talks to ImageKit (venue photos)
 ```
 
-![Bookspot system architecture flowchart](./flow.webp)
+![Bookspot system architecture flowchart](./public/flow.webp)
 
 ### Reading venue data (fast path)
 
