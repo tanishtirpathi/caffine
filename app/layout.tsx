@@ -36,6 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}>
+      <head><link rel="icon" href="/favicon.ico" sizes="any" /></head>
       <body className="min-h-full bg-[#f7f7f5] text-[#171A2B]">{children}</body>
     </html>
   );
