@@ -216,7 +216,7 @@ export default function VenueDetailsPage() {
       <Navbar />
       <div className="mx-auto max-w-6xl px-6 py-10 sm:px-8">
         <Link
-          href="/venue"
+          href="/venue" 
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-[#101622]"
         >
           <ArrowLeft size={16} /> All venues

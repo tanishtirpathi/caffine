@@ -6,7 +6,7 @@ export default function Name({ scale = 0.5 }: { scale?: number }) {
 
   return (
     <div 
-      className="flex items-center justify-center min-h-screen font-bold text-[#171A2B]"
+      className="flex items-center justify-center font-bold text-[#171A2B]"
       style={{
         fontSize: `${baseFontSize * scale}px`,
         letterSpacing: `${baseLetterSpacing * scale}px`,
