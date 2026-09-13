@@ -23,12 +23,14 @@ Bookspot fixes this by giving everyone one shared, always-up-to-date system.
 ## Who Uses Bookspot
 
 ### Students can:
-- Create an account and log in
+
+- log in
 - Browse venues and see photos, capacity, building, and available equipment
 - Request a booking (date, time, expected attendance, reason, equipment needed)
 - Track the status of their requests from a dashboard or calendar
 
 ### Administrators can:
+
 - Log in with admin access
 - Add new venues (with photos, capacity, and equipment lists)
 - Review incoming booking requests
@@ -49,6 +51,7 @@ Each venue lists which equipment it has available. Students pick from this list 
 - Stage
 
 **Two safety checks happen on every booking:**
+
 1. The equipment requested must be a real, supported type.
 2. The equipment must actually be available at that specific venue.
 
@@ -58,20 +61,20 @@ Whatever equipment was requested is saved with the booking, so both students and
 
 ## How It's Built
 
-| Technology | What it's for |
-|---|---|
-| Next.js 16.3.4 | Powers the web pages and backend API in one app |
-| React 19.2.8 | Builds the interactive screens (booking, dashboards, admin tools) |
-| TypeScript | Keeps data consistent and catches errors early |
-| Tailwind CSS 4 | Styling and visual design |
-| MongoDB | Stores users, venues, and bookings |
-| Mongoose | Manages database structure and queries |
-| Redis | Speeds up venue browsing with caching |
-| ImageKit | Hosts and serves venue photos |
-| bcrypt | Encrypts passwords |
-| jsonwebtoken (JWT) | Handles secure login sessions |
-| lucide-react | Icons used across the interface |
-| PM2, Nginx, VPS | Planned for production hosting (not yet set up in this repo) |
+| Technology         | What it's for                                                     |
+| ------------------ | ----------------------------------------------------------------- |
+| Next.js 16.3.4     | Powers the web pages and backend API in one app                   |
+| React 19.2.8       | Builds the interactive screens (booking, dashboards, admin tools) |
+| TypeScript         | Keeps data consistent and catches errors early                    |
+| Tailwind CSS 4     | Styling and visual design                                         |
+| MongoDB            | Stores users, venues, and bookings                                |
+| Mongoose           | Manages database structure and queries                            |
+| Redis              | Speeds up venue browsing with caching                             |
+| ImageKit           | Hosts and serves venue photos                                     |
+| bcrypt             | Encrypts passwords                                                |
+| jsonwebtoken (JWT) | Handles secure login sessions                                     |
+| lucide-react       | Icons used across the interface                                   |
+| PM2, Nginx, VPS    | Planned for production hosting (not yet set up in this repo)      |
 
 ---
 
@@ -102,7 +105,7 @@ When someone loads the venue list, Bookspot tries to serve it quickly using a ca
 3. **If not found:** fetch fresh data from MongoDB, save a copy in Redis for next time, then return it.
 4. Cached data expires automatically after 60 seconds, so it never gets too stale.
 
-> Redis only makes *reading* venues faster. It never decides whether a booking is valid — that's always checked directly against the real database.
+> Redis only makes _reading_ venues faster. It never decides whether a booking is valid — that's always checked directly against the real database.
 
 ### Submitting a booking (accurate path)
 
@@ -122,6 +125,7 @@ Bookings always go straight to the main database — no caching — because accu
 ## Data Structure
 
 ### Venue
+
 ```text
 name       (text)
 building   (text)
@@ -133,6 +137,7 @@ updatedAt  (date last changed)
 ```
 
 ### Booking
+
 ```text
 venue_id          (which venue)
 user_id           (who booked it)
@@ -149,12 +154,12 @@ updatedAt         (date last changed)
 
 ### Booking Status Meanings
 
-| Status | Meaning |
-|---|---|
-| `pending` | Waiting for an admin to review it |
-| `approved` | Accepted by an admin |
-| `rejected` | Declined by an admin |
-| `cancelled` | Cancelled by the student |
+| Status      | Meaning                             |
+| ----------- | ----------------------------------- |
+| `pending`   | Waiting for an admin to review it   |
+| `approved`  | Accepted by an admin                |
+| `rejected`  | Declined by an admin                |
+| `cancelled` | Cancelled by the student            |
 | `completed` | The event's time has already passed |
 
 ---
@@ -163,44 +168,45 @@ updatedAt         (date last changed)
 
 ### Website Pages
 
-| Page | What it does |
-|---|---|
-| `/` | Homepage |
-| `/venue` | Browse all venues |
-| `/venue/[id]` | View one venue and book it |
-| `/user` | Student's personal dashboard |
-| `/calendar` | Calendar view of bookings |
-| `/profile` | User's profile settings |
-| `/admin` | Admin dashboard for reviewing bookings |
-| `/admin/create-venue` | Form to add a new venue |
-| `/about` | About the product and team |
-| `/blog` | Technical write-up and performance results |
-| `/faqs` | Frequently asked questions |
-| `/auth/login` | Login page |
+| Page                  | What it does                               |
+| --------------------- | ------------------------------------------ |
+| `/`                   | Homepage                                   |
+| `/venue`              | Browse all venues                          |
+| `/venue/[id]`         | View one venue and book it                 |
+| `/user`               | Student's personal dashboard               |
+| `/calendar`           | Calendar view of bookings                  |
+| `/profile`            | User's profile settings                    |
+| `/admin`              | Admin dashboard for reviewing bookings     |
+| `/admin/create-venue` | Form to add a new venue                    |
+| `/about`              | About the product and team                 |
+| `/blog`               | Technical write-up and performance results |
+| `/faqs`               | Frequently asked questions                 |
+| `/auth/login`         | Login page                                 |
 
 ### API Endpoints
 
-| Endpoint | Method | What it does |
-|---|---|---|
-| `/api/regester` | POST | Create a new account |
-| `/api/login` | POST | Log in |
-| `/api/logout` | POST | Log out |
-| `/api/me` | GET | Get the currently logged-in user |
-| `/api/venue` | GET | List all venues (cached) |
-| `/api/venue/[id]` | GET | Get one venue's details |
-| `/api/Create-venue` | POST | Add a new venue (admin only) |
-| `/api/booking` | GET | Get the current user's bookings |
-| `/api/booking` | POST | Submit a new booking request |
-| `/api/booking/all` | GET | View all campus bookings |
-| `/api/admin/bookings` | GET / PATCH | Review and update booking status (admin) |
-| `/api/admin/users` | GET | List all users (admin) |
-| `/api/admin/users/[id]` | PATCH | Update a user's permissions (admin) |
+| Endpoint                | Method      | What it does                             |
+| ----------------------- | ----------- | ---------------------------------------- |
+| `/api/regester`         | POST        | Create a new account                     |
+| `/api/login`            | POST        | Log in                                   |
+| `/api/logout`           | POST        | Log out                                  |
+| `/api/me`               | GET         | Get the currently logged-in user         |
+| `/api/venue`            | GET         | List all venues (cached)                 |
+| `/api/venue/[id]`       | GET         | Get one venue's details                  |
+| `/api/Create-venue`     | POST        | Add a new venue (admin only)             |
+| `/api/booking`          | GET         | Get the current user's bookings          |
+| `/api/booking`          | POST        | Submit a new booking request             |
+| `/api/booking/all`      | GET         | View all campus bookings                 |
+| `/api/admin/bookings`   | GET / PATCH | Review and update booking status (admin) |
+| `/api/admin/users`      | GET         | List all users (admin)                   |
+| `/api/admin/users/[id]` | PATCH       | Update a user's permissions (admin)      |
 
 ---
 
 ## Running It Locally
 
 ### You'll need:
+
 - Node.js 20+
 - npm
 - A MongoDB connection string
@@ -208,6 +214,7 @@ updatedAt         (date last changed)
 - An ImageKit account (only needed if uploading venue images)
 
 ### 1. Install dependencies
+
 ```bash
 npm install
 ```
@@ -228,18 +235,22 @@ IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your-imagekit-id
 ⚠️ Never commit `.env.local` or share your secret values.
 
 ### 3. Start the app
+
 ```bash
 npm run dev
 ```
+
 Then open [http://localhost:3000](https://bookspot.me).
 
 ### Production commands
+
 ```bash
 npm run build
 npm run start
 ```
 
 ### Optional quality checks
+
 ```bash
 npm run lint        # check code style
 npx tsc --noEmit     # check for type errors
@@ -252,26 +263,16 @@ git diff --check     # check for merge conflict leftovers
 
 Bookspot's team tested the venue-loading system under 1,000 concurrent users, both **before** and **after** adding Redis caching:
 
-| Metric | Before Redis | After Redis | Improvement |
-|---|---:|---:|---:|
-| Throughput | 139.6 requests/sec | 393.7 requests/sec | **+182%** |
-| Average response time | 3.76s | 0.157s | **~96% faster** |
-| P95 response time | 5.06s | 0.708s | **~86% faster** |
-| Failed requests | 9.47% | 0% | **100% fewer failures** |
+| Metric                |       Before Redis |        After Redis |             Improvement |
+| --------------------- | -----------------: | -----------------: | ----------------------: |
+| Throughput            | 139.6 requests/sec | 393.7 requests/sec |               **+182%** |
+| Average response time |              3.76s |             0.157s |         **~96% faster** |
+| P95 response time     |              5.06s |             0.708s |         **~86% faster** |
+| Failed requests       |              9.47% |                 0% | **100% fewer failures** |
 
 **In short:** adding Redis made venue browsing much faster and far more reliable under heavy load — without changing how bookings are validated. Booking creation still goes straight to the database every time, because correctness matters more than speed there.
 
-*Note: these are results from one specific test, not a guarantee for every setup or workload.*
-
----
-
-## What We're Still Figuring Out
-
-- Should students be able to filter venues by building, capacity, date, or equipment? (Likely yes, as the venue list grows.)
-- Should admins get a history log of changes to bookings and venues?
-- Should equipment support quantities (e.g., "2 microphones") instead of just available/unavailable?
-- Should booking conflicts get a stronger database-level safeguard for high-traffic approval moments?
-- Is 60 seconds the right cache time? This should be tuned once we have real traffic data.
+_Note: these are results from one specific test, not a guarantee for every setup or workload._
 
 ---
 
@@ -313,3 +314,9 @@ Right now, Bookspot handles: browsing venues, submitting booking requests, selec
 ## License
 
 No license has been chosen for this project yet.
+
+---
+
+## Project Overview
+
+![Bookspot project overview](./public/flex.png)
