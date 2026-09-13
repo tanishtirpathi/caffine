@@ -171,7 +171,11 @@ function VenueCard({ venue }: { venue: Venue }) {
   const image = venue.images?.[0];
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10">
+    <Link
+      href={`/venue/${venue._id}`}
+      className="group block overflow-hidden rounded-2xl border border-black/10
+     bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl
+      hover:shadow-black/10">
       <div className="relative aspect-[16/10] overflow-hidden bg-[#e7e8e5]">
         {image ? (
           <img
@@ -202,13 +206,10 @@ function VenueCard({ venue }: { venue: Venue }) {
         <div className="mt-4 flex items-center gap-2 text-sm text-slate-500">
           <Users size={16} /> Up to {venue.capacity} people
         </div>
-        <Link
-          href={`/venue/${venue._id}`}
-          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#E8B928] px-4 py-3 text-sm font-semibold text-[#101622] transition hover:bg-[#d9ab1e]"
-        >
+        <span className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#E8B928] px-4 py-3 text-sm font-semibold text-[#101622] transition group-hover:bg-[#d9ab1e]">
           View and book <ArrowRight size={16} />
-        </Link>
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }
