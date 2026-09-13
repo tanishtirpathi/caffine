@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { ArrowLeft, Building2, CalendarDays, MapPin, Users } from "lucide-react";
+import { ArrowLeft, Building2, CalendarDays, ChevronLeft, ChevronRight, MapPin, Users } from "lucide-react";
 import Navbar from "../../../components/navbar";
 
 type Venue = {
@@ -15,6 +15,7 @@ type Venue = {
 };
 
 const timeSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+const MAX_REASON_LENGTH = 250;
 
 export default function VenueDetailsPage() {
   const params = useParams<{ id: string }>();
@@ -25,6 +26,7 @@ export default function VenueDetailsPage() {
   const [endingTime, setEndingTime] = useState("10:00");
   const [numberOfStudents, setNumberOfStudents] = useState("");
   const [reason, setReason] = useState("");
+  const [imageIndex, setImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
@@ -37,6 +39,7 @@ export default function VenueDetailsPage() {
         const data = await response.json();
         if (!response.ok) throw new Error(data.message || "Venue not found");
         setVenue(data.venue);
+        setImageIndex(0);
       } catch (requestError) {
         setError(requestError instanceof Error ? requestError.message : "Venue not found");
       } finally {
@@ -97,6 +100,20 @@ function getTodayDate() {
     }
   };
 
+  const showPreviousImage = () => {
+    if (!venue?.images?.length) return;
+    setImageIndex((currentIndex) =>
+      currentIndex === 0 ? venue.images.length - 1 : currentIndex - 1
+    );
+  };
+
+  const showNextImage = () => {
+    if (!venue?.images?.length) return;
+    setImageIndex((currentIndex) =>
+      currentIndex === venue.images.length - 1 ? 0 : currentIndex + 1
+    );
+  };
+
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#171A2B]">
       <Navbar />
@@ -110,8 +127,21 @@ function getTodayDate() {
         ) : venue ? (
           <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <section className="overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm">
-              <div className="aspect-[16/9] bg-[#101622]">
-                {venue.images?.[0] ? <img src={venue.images[0]} alt={venue.name} className="h-full w-full object-cover" /> : <div className="flex h-full flex-col items-center justify-center text-[#E8B928]"><Building2 size={48} /><span className="mt-3 text-sm text-white/70">Campus space</span></div>}
+              <div className="relative aspect-[16/9] bg-[#101622]">
+                {venue.images?.[imageIndex] ? <img src={venue.images[imageIndex]} alt={`${venue.name} image ${imageIndex + 1}`} className="h-full w-full object-cover" /> : <div className="flex h-full flex-col items-center justify-center text-[#E8B928]"><Building2 size={48} /><span className="mt-3 text-sm text-white/70">Campus space</span></div>}
+                {venue.images?.length > 1 && (
+                  <>
+                    <button type="button" aria-label="Show previous venue image" onClick={showPreviousImage} className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white transition hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white">
+                      <ChevronLeft size={22} />
+                    </button>
+                    <button type="button" aria-label="Show next venue image" onClick={showNextImage} className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white transition hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white">
+                      <ChevronRight size={22} />
+                    </button>
+                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs text-white">
+                      {imageIndex + 1} / {venue.images.length}
+                    </span>
+                  </>
+                )}
               </div>
               <div className="p-7 sm:p-9">
                 <p className="flex items-center gap-2 text-sm font-semibold text-[#B28713]"><MapPin size={16} /> {venue.building}</p>
@@ -127,7 +157,7 @@ function getTodayDate() {
                 <label className="block text-sm font-medium">Date<input required type="date" value={date} min={getTodayDate()} onChange={(event) => setDate(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
                 <div className="grid grid-cols-2 gap-3"><label className="text-sm font-medium">From<select value={startingTime} onChange={(event) => setStartingTime(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 bg-white px-3 py-3"><option value="09:00">09:00</option>{timeSlots.slice(1).map((time) => <option key={time} value={time}>{time}</option>)}</select></label><label className="text-sm font-medium">Until<select value={endingTime} onChange={(event) => setEndingTime(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 bg-white px-3 py-3">{timeSlots.slice(1).map((time) => <option key={time} value={time}>{time}</option>)}</select></label></div>
                 <label className="block text-sm font-medium">Expected attendance<input required type="number" min="1" max={venue.capacity} value={numberOfStudents} onChange={(event) => setNumberOfStudents(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
-                <label className="block text-sm font-medium">What is the event for?<textarea required rows={3} value={reason} onChange={(event) => setReason(event.target.value)} className="mt-2 w-full resize-none rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
+                <label className="block text-sm font-medium">What is the event for?<textarea required rows={3} maxLength={MAX_REASON_LENGTH} value={reason} onChange={(event) => setReason(event.target.value)} className="mt-2 w-full resize-none rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /><span className="mt-1 block text-right text-xs text-slate-500">{reason.length}/{MAX_REASON_LENGTH}</span></label>
               </div>
               {error && <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
               {message && <p className="mt-4 rounded-xl bg-green-50 p-3 text-sm text-green-700">{message}</p>}

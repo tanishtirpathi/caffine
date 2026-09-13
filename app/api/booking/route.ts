@@ -21,6 +21,7 @@ const validTimes = [
 ] as const;
 
 const bookingStatuses: BookingStatus[] = ["pending", "approved"];
+const MAX_REASON_LENGTH = 250;
 // ! this is the data we have to send from the frontend 
 type BookingData = {
 	venueId: string;
@@ -86,7 +87,8 @@ function parseBookingData(value: unknown): BookingData | null {
         isValidDate &&
         Number.isInteger(numberOfStudents) &&
         (numberOfStudents as number) > 0 &&
-        Boolean(reason)
+		Boolean(reason) &&
+		reason.length <= MAX_REASON_LENGTH
     ) {
         return {
             venueId: body.venueId,

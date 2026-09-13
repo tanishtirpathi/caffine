@@ -158,7 +158,7 @@ export default function AdminDashboardPage() {
         </section>
 
         <section className="mt-8 grid gap-6 lg:grid-cols-2">
-          <AdminLink href="/admin/create-venue" icon={<Building2 size={20} />} title="Manage venues" description="Add new campus spaces and keep capacity information current." />
+          <AdminLink href="/admin/create-venue" icon={<Building2 size={20} />} title="create venues" description="Add new campus spaces and keep capacity information current." />
           <AdminLink href="/admin/users" icon={<ShieldCheck size={20} />} title="Manage users" description="Review accounts and authorization status across the campus." />
         </section>
       </div>

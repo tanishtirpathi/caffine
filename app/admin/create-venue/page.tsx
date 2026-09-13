@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import Navbar from "../../../components/navbar";
 
+const MAX_IMAGES = 5;
+
 export default function CreateVenuePage() {
   const [name, setName] = useState("");
   const [building, setBuilding] = useState("");
@@ -26,6 +28,19 @@ export default function CreateVenuePage() {
   const [loading, setLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageChange = (files: FileList | null) => {
+    const nextImages = Array.from(files || []);
+
+    if (nextImages.length > MAX_IMAGES) {
+      setError(`You can select a maximum of ${MAX_IMAGES} images.`);
+      setSelectedImages(nextImages.slice(0, MAX_IMAGES));
+      return;
+    }
+
+    setError("");
+    setSelectedImages(nextImages);
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -249,11 +264,7 @@ export default function CreateVenuePage() {
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={(event) =>
-                      setSelectedImages(
-                        Array.from(event.target.files || [])
-                      )
-                    }
+                    onChange={(event) => handleImageChange(event.target.files)}
                     className="hidden"
                   />
                 </label>
@@ -274,6 +285,9 @@ export default function CreateVenuePage() {
                             event.preventDefault();
                             event.stopPropagation();
                             setSelectedImages((current) => current.filter((_, imageIndex) => imageIndex !== index));
+                            if (fileInputRef.current) {
+                              fileInputRef.current.value = "";
+                            }
                           }}
                           className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-slate-500 transition hover:bg-red-50 hover:text-red-600"
                         >
