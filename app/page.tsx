@@ -82,7 +82,7 @@ export default function Home() {
           </h2>
 
           <p className="mt-4 text-base leading-7 text-slate-600">
-            CampusFlow keeps the entire booking process simple while helping
+            Bookspot keeps the entire booking process simple while helping
             prevent scheduling conflicts
           </p>
         </div>
@@ -106,7 +106,7 @@ export default function Home() {
             number="03"
             icon={<CheckCircle2 size={20} />}
             title="Avoid conflicts"
-            description="CampusFlow helps identify unavailable slots and makes finding alternatives easier."
+            description="Bookspot helps identify unavailable slots and makes finding alternatives easier."
           />
         </div>
       </section>
@@ -144,7 +144,7 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 CampusFlow</p>
+          <p>© 2026 Bookspot</p>
           <p>Smart campus resource management</p>
         </div>
       </footer>

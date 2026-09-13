@@ -62,7 +62,7 @@ export default function ProfilePage() {
           <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
             {loading ? "Loading profile..." : user?.name || "Your account"}
           </h1>
-          <p className="mt-4 max-w-xl text-slate-300">Manage your account details and sign out securely from your CampusFlow profile.</p>
+          <p className="mt-4 max-w-xl text-slate-300">Manage your account details and sign out securely from your Bookspot profile.</p>
         </div>
       </section>
 
