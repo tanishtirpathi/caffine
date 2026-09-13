@@ -11,6 +11,7 @@ import dbConnect from "@/lib/monodb";
 import VenueModel from "@/modal/venue.modal";
 import { IsLoggedIn } from "@/app/middleware/isloggedin";
 import { VENUE_RESOURCES } from "@/lib/resources";
+import { getRedisClient } from "@/lib/redis";
 
 export async function GET() {
   try {
@@ -117,6 +118,13 @@ export async function POST(request: Request) {
       resources: [...new Set(resources)],
       images: imageUrls,
     });
+
+    try {
+      const redis = await getRedisClient();
+      await redis.del("venues:all");
+    } catch (cacheError) {
+      console.error("Unable to invalidate venue cache after creation:", cacheError);
+    }
 
     return NextResponse.json(
       {

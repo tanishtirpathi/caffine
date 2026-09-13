@@ -5,6 +5,7 @@ import dbConnect from "@/lib/monodb";
 import BookingModel from "@/modal/booking.modal";
 import VenueModel from "@/modal/venue.modal";
 import { IsLoggedIn } from "@/app/middleware/isloggedin";
+import { getRedisClient } from "@/lib/redis";
 
 type RouteContext = {
     params: Promise<{ id: string }>;
@@ -60,6 +61,13 @@ export async function DELETE(_request: Request, context: RouteContext) {
         }
 
         await BookingModel.deleteMany({ venue_id: id });
+
+        try {
+            const redis = await getRedisClient();
+            await redis.del("venues:all");
+        } catch (cacheError) {
+            console.error("Unable to invalidate venue cache after deletion:", cacheError);
+        }
 
         return NextResponse.json(
             { message: "Venue deleted successfully", venue },
