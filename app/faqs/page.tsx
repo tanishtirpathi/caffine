@@ -11,7 +11,7 @@ const faqGroups = [
 			{
 				question: "What is Bookspot?",
 				answer:
-					"Bookspot is a simple way to find campus venues, check their availability, and request a booking without chasing spreadsheets or sending back-and-forth messages.",
+					"Bookspot is a simple way to find campus venues, check their availability, and request a booking without chasing permission or sending back-and-forth messages.",
 			},
 			{
 				question: "Who can use Bookspot?",
