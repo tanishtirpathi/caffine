@@ -15,13 +15,16 @@ import {
   X,
 } from "lucide-react";
 import Navbar from "../../../components/navbar";
+import { VENUE_RESOURCES } from "../../../lib/resources";
 
 const MAX_IMAGES = 5;
+const CREATE_VENUE_TIMEOUT_MS = 90_000;
 
 export default function CreateVenuePage() {
   const [name, setName] = useState("");
   const [building, setBuilding] = useState("");
   const [capacity, setCapacity] = useState("");
+  const [resources, setResources] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -54,6 +57,7 @@ export default function CreateVenuePage() {
     formData.append("name", name);
     formData.append("building", building);
     formData.append("capacity", String(capacity));
+    formData.append("resources", JSON.stringify(resources));
 
     for (const image of selectedImages) {
       formData.append("images", image);
@@ -63,6 +67,7 @@ export default function CreateVenuePage() {
       const response = await fetch("/api/Create-venue", {
         method: "POST",
         body: formData,
+        signal: AbortSignal.timeout(CREATE_VENUE_TIMEOUT_MS),
       });
 
       const data = await response.json();
@@ -76,6 +81,7 @@ export default function CreateVenuePage() {
       setName("");
       setBuilding("");
       setCapacity("");
+      setResources([]);
       setSelectedImages([]);
 
       // Clear actual file input
@@ -83,6 +89,11 @@ export default function CreateVenuePage() {
         fileInputRef.current.value = "";
       }
     } catch (error) {
+      if (error instanceof DOMException && error.name === "TimeoutError") {
+        setError("Creating the venue took too long. Check your connection and try again.");
+        return;
+      }
+
       setError(
         error instanceof Error
           ? error.message
@@ -238,6 +249,29 @@ export default function CreateVenuePage() {
                 <p className="mt-2 text-xs text-slate-600">
                   {capacity ? `This venue can host up to ${capacity} people.` : "Enter the maximum number of people this venue can hold."}
                 </p>
+              </div>
+
+              {/* Images */}
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-[#101622]">
+                  Available resources
+                </label>
+                <p className="mb-3 text-xs text-slate-600">
+                  Select the equipment and facilities students can request for this venue.
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {VENUE_RESOURCES.map((resource) => (
+                    <label key={resource} className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-700 transition hover:border-[#E8B928]">
+                      <input
+                        type="checkbox"
+                        checked={resources.includes(resource)}
+                        onChange={(event) => setResources((current) => event.target.checked ? [...current, resource] : current.filter((item) => item !== resource))}
+                        className="h-4 w-4 accent-[#E8B928]"
+                      />
+                      {resource}
+                    </label>
+                  ))}
+                </div>
               </div>
 
               {/* Images */}

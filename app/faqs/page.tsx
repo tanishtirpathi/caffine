@@ -9,12 +9,12 @@ const faqGroups = [
 		label: "Getting started",
 		questions: [
 			{
-				question: "What is CampusFlow?",
+				question: "What is Bookspot?",
 				answer:
-					"CampusFlow is a simple way to find campus venues, check their availability, and request a booking without chasing spreadsheets or sending back-and-forth messages.",
+					"Bookspot is a simple way to find campus venues, check their availability, and request a booking without chasing spreadsheets or sending back-and-forth messages.",
 			},
 			{
-				question: "Who can use CampusFlow?",
+				question: "Who can use Bookspot?",
 				answer:
 					"Students can browse venues and submit booking requests. Campus administrators manage venue details, review requests, and keep campus availability up to date.",
 			},
@@ -36,7 +36,7 @@ const faqGroups = [
 			{
 				question: "Can I book a venue that is already reserved?",
 				answer:
-					"No. CampusFlow shows unavailable time slots and helps prevent overlapping requests, so you can choose another time or find a different venue before submitting.",
+					"No. Bookspot shows unavailable time slots and helps prevent overlapping requests, so you can choose another time or find a different venue before submitting.",
 			},
 			{
 				question: "How do I know whether my booking was approved?",
@@ -113,7 +113,8 @@ export default function FaqsPage() {
 				</div>
 			</section>
 
-			<footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between"><p>© 2026 CampusFlow</p><p>Smart campus resource management</p></div></footer>
+			<footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between"><p>© 2026 Bookspot
+				</p><p>Smart campus resource management</p></div></footer>
 		</main>
 	);
 }

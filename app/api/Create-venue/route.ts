@@ -10,6 +10,7 @@ import { uploadVenueImage, deleteVenueImage } from "@/lib/venue-images";
 import dbConnect from "@/lib/monodb";
 import VenueModel from "@/modal/venue.modal";
 import { IsLoggedIn } from "@/app/middleware/isloggedin";
+import { VENUE_RESOURCES } from "@/lib/resources";
 
 export async function GET() {
   try {
@@ -58,6 +59,21 @@ export async function POST(request: Request) {
     const name = String(formData.get("name") || "").trim();
     const building = String(formData.get("building") || "").trim();
     const capacity = Number(formData.get("capacity"));
+    const resourcesValue = String(formData.get("resources") || "[]");
+    let resources: string[];
+
+    try {
+      const parsedResources: unknown = JSON.parse(resourcesValue);
+      resources = Array.isArray(parsedResources)
+        ? parsedResources.filter(
+            (resource): resource is string =>
+              typeof resource === "string" &&
+              VENUE_RESOURCES.includes(resource as (typeof VENUE_RESOURCES)[number]),
+          )
+        : [];
+    } catch {
+      return NextResponse.json({ message: "Resources must be a valid list" }, { status: 400 });
+    }
 
     const files = formData.getAll("images").filter((value): value is File => value instanceof File);
 
@@ -98,6 +114,7 @@ export async function POST(request: Request) {
       name,
       building,
       capacity,
+      resources: [...new Set(resources)],
       images: imageUrls,
     });
 

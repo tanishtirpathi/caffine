@@ -14,6 +14,7 @@ export interface BookingDocument {
 	ending_time: string;
 	date: string;
 	numberofStudents: number;
+	resources: string[];
 	status: BookingStatus;
 	reason: string;
 	createdAt: Date;
@@ -36,6 +37,7 @@ const BookingSchema = new Schema<BookingDocument>(
 		ending_time: { type: String, required: true , enum: [ "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]},
 		date: { type:String, required: true },
 		numberofStudents: { type: Number, min: 1, required: true },
+		resources: { type: [String], default: [] },
 		status: {
 			type: String,
 			enum: ["pending", "approved", "rejected", "cancelled", "completed"], // approved by admin, rejected by admin, cancelled by user, completed after the booking is done

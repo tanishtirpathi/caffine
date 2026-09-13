@@ -4,6 +4,8 @@ import { join } from "node:path";
 
 import imageKit from "@/lib/imagekit";
 
+const IMAGE_UPLOAD_TIMEOUT_MS = 60_000;
+
 export async function uploadVenueImage(file: File, temporaryDirectory: string) {
   const temporaryFilePath = join(temporaryDirectory, `${randomUUID()}-${file.name}`);
 
@@ -14,12 +16,17 @@ export async function uploadVenueImage(file: File, temporaryDirectory: string) {
   try {
     const temporaryFile = await readFile(temporaryFilePath);
 
-    const uploadedImage = await imageKit.upload({
-      file: temporaryFile,
-      fileName: file.name || "venue-image.jpg",
-      folder: "BookSpot/Venues",
-      useUniqueFileName: true,
-    });
+    const uploadedImage = await Promise.race([
+      imageKit.upload({
+        file: temporaryFile,
+        fileName: file.name || "venue-image.jpg",
+        folder: "BookSpot/Venues",
+        useUniqueFileName: true,
+      }),
+      new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error("Image upload timed out. Please try again.")), IMAGE_UPLOAD_TIMEOUT_MS);
+      }),
+    ]);
 
     return {
       url: uploadedImage.url,

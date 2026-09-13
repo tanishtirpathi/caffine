@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { ArrowLeft, Building2, CalendarDays, ChevronLeft, ChevronRight, MapPin, Users } from "lucide-react";
 import Navbar from "../../../components/navbar";
+import { VENUE_RESOURCES } from "../../../lib/resources";
 
 type Venue = {
   _id: string;
@@ -12,6 +13,7 @@ type Venue = {
   building: string;
   capacity: number;
   images: string[];
+  resources: string[];
 };
 
 const timeSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
@@ -26,6 +28,7 @@ export default function VenueDetailsPage() {
   const [endingTime, setEndingTime] = useState("10:00");
   const [numberOfStudents, setNumberOfStudents] = useState("");
   const [reason, setReason] = useState("");
+  const [selectedResources, setSelectedResources] = useState<string[]>([]);
   const [imageIndex, setImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -78,6 +81,7 @@ function getTodayDate() {
           endingTime,
           numberOfStudents: Number(numberOfStudents),
           reason,
+          resources: selectedResources,
         }),
       });
       const data = await response.json();
@@ -147,6 +151,14 @@ function getTodayDate() {
                 <p className="flex items-center gap-2 text-sm font-semibold text-[#B28713]"><MapPin size={16} /> {venue.building}</p>
                 <h1 className="mt-3 text-4xl font-semibold tracking-tight">{venue.name}</h1>
                 <p className="mt-4 flex items-center gap-2 text-slate-500"><Users size={17} /> Capacity: {venue.capacity} people</p>
+                <div className="mt-7 border-t border-black/10 pt-6">
+                  <h2 className="text-sm font-semibold">Available resources</h2>
+                  {venue.resources?.length ? (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {venue.resources.map((resource) => <span key={resource} className="rounded-full bg-[#FFF4C9] px-3 py-1.5 text-xs font-medium text-[#8E6A08]">{resource}</span>)}
+                    </div>
+                  ) : <p className="mt-2 text-sm text-slate-500">No additional resources listed.</p>}
+                </div>
               </div>
             </section>
 
@@ -157,6 +169,7 @@ function getTodayDate() {
                 <label className="block text-sm font-medium">Date<input required type="date" value={date} min={getTodayDate()} onChange={(event) => setDate(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
                 <div className="grid grid-cols-2 gap-3"><label className="text-sm font-medium">From<select value={startingTime} onChange={(event) => setStartingTime(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 bg-white px-3 py-3"><option value="09:00">09:00</option>{timeSlots.slice(1).map((time) => <option key={time} value={time}>{time}</option>)}</select></label><label className="text-sm font-medium">Until<select value={endingTime} onChange={(event) => setEndingTime(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 bg-white px-3 py-3">{timeSlots.slice(1).map((time) => <option key={time} value={time}>{time}</option>)}</select></label></div>
                 <label className="block text-sm font-medium">Expected attendance<input required type="number" min="1" max={venue.capacity} value={numberOfStudents} onChange={(event) => setNumberOfStudents(event.target.value)} className="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /></label>
+                {venue.resources?.length > 0 && <fieldset><legend className="text-sm font-medium">Resources needed</legend><div className="mt-2 grid gap-2 sm:grid-cols-2">{VENUE_RESOURCES.filter((resource) => venue.resources.includes(resource)).map((resource) => <label key={resource} className="flex items-center gap-2 rounded-xl border border-black/10 px-3 py-2.5 text-sm text-slate-700"><input type="checkbox" checked={selectedResources.includes(resource)} onChange={(event) => setSelectedResources((current) => event.target.checked ? [...current, resource] : current.filter((item) => item !== resource))} className="h-4 w-4 accent-[#E8B928]" />{resource}</label>)}</div></fieldset>}
                 <label className="block text-sm font-medium">What is the event for?<textarea required rows={3} maxLength={MAX_REASON_LENGTH} value={reason} onChange={(event) => setReason(event.target.value)} className="mt-2 w-full resize-none rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /><span className="mt-1 block text-right text-xs text-slate-500">{reason.length}/{MAX_REASON_LENGTH}</span></label>
               </div>
               {error && <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}

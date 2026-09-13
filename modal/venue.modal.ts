@@ -6,6 +6,7 @@ export interface VenueDocument {
 	name: string;
 	building: string;
 	isActive: boolean;
+	resources: string[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -16,6 +17,7 @@ const VenueSchema = new Schema<VenueDocument>(
 		images: { type: [String], default:[] }, // images of the venue, imagekit will be used to upload the image and get the url, this url will be stored in the database
 		name: { type: String, required: true, trim: true }, // name of the venue/room
 		building: { type: String, required: true, trim: true },  // builidng in which the venue is located
+		resources: { type: [String], default: [] }, // resources available in the venue
 	},
 	{ timestamps: true }  // createdAt and updatedAt will be automatically added to the document
 );
