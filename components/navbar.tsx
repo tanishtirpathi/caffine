@@ -7,6 +7,7 @@ import {
   Info,
   LayoutDashboard,
   Menu,
+  Newspaper,
   UserRound,
   X,
 } from "lucide-react";
@@ -20,6 +21,7 @@ const navigation = [
   { href: "/venue", label: "Venues", icon: LayoutDashboard },
   { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/about", label: "About", icon: Info },
+  { href: "/blog", label: "Blog", icon: Newspaper },
   { href: "/faqs", label: "FAQs", icon: CircleHelp },
 ];
 
