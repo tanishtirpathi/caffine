@@ -5,6 +5,7 @@ export type BookingRequest = {
     reason: string;
     numberOfStudents: number;
     date: string;
+    resources: string[];
 };
 
 export type BookingTime = 

@@ -32,6 +32,7 @@ type Booking = {
   reason: string;
   status: string;
   numberofStudents?: number;
+  resources?: string[];
   venue_id?: { name?: string; building?: string };
 };
 
@@ -166,7 +167,7 @@ function ViewButton({ active, onClick, children }: { active: boolean; onClick: (
 }
 
 function BookingRow({ booking, compact = false }: { booking: Booking; compact?: boolean }) {
-  return <article className={`rounded-2xl border border-black/10 bg-[#f7f7f5] p-4 ${compact ? "h-full" : ""}`}><div className="flex items-start justify-between gap-3"><div><h3 className="font-semibold">{booking.venue_id?.name ?? "Campus venue"}</h3><p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500"><MapPin size={13} /> {booking.venue_id?.building ?? "Campus"}</p></div><StatusBadge status={booking.status} /></div><div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-500"><span className="flex items-center gap-1.5"><CalendarDays size={13} /> {formatDate(booking.date)}</span><span className="flex items-center gap-1.5"><Clock3 size={13} /> {booking.starting_time} - {booking.ending_time}</span></div><p className="mt-3 text-sm text-slate-600">{booking.reason}</p></article>;
+  return <article className={`rounded-2xl border border-black/10 bg-[#f7f7f5] p-4 ${compact ? "h-full" : ""}`}><div className="flex items-start justify-between gap-3"><div><h3 className="font-semibold">{booking.venue_id?.name ?? "Campus venue"}</h3><p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500"><MapPin size={13} /> {booking.venue_id?.building ?? "Campus"}</p></div><StatusBadge status={booking.status} /></div><div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-500"><span className="flex items-center gap-1.5"><CalendarDays size={13} /> {formatDate(booking.date)}</span><span className="flex items-center gap-1.5"><Clock3 size={13} /> {booking.starting_time} - {booking.ending_time}</span></div><p className="mt-3 text-sm text-slate-600">{booking.reason}</p>{booking.resources?.length ? <p className="mt-2 text-xs text-slate-500">Resources: {booking.resources.join(", ")}</p> : null}</article>;
 }
 
 function StatusBadge({ status }: { status: string }) {

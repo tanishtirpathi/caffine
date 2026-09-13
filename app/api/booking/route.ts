@@ -6,6 +6,7 @@ import BookingModel, { BookingStatus } from "@/modal/booking.modal";
 import UserModel from "@/modal/user.modal";
 import VenueModel from "@/modal/venue.modal";
 import { IsLoggedIn } from "@/app/middleware/isloggedin";
+import { VENUE_RESOURCES } from "@/lib/resources";
 
 //! this is out time slots
 const validTimes = [
@@ -30,6 +31,7 @@ type BookingData = {
 	date: string;
 	numberOfStudents: number;
 	reason: string;
+	resources: string[];
 };
 //! it will automatically detect the user id 
 function getUserId(session: unknown) {
@@ -72,6 +74,9 @@ function parseBookingData(value: unknown): BookingData | null {
     const numberOfStudents = body.numberOfStudents;
     const reason =
         typeof body.reason === "string" ? body.reason.trim() : "";
+	const resources = Array.isArray(body.resources)
+		? body.resources.filter((resource): resource is string => typeof resource === "string")
+		: [];
 
     const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
 
@@ -89,6 +94,9 @@ function parseBookingData(value: unknown): BookingData | null {
         (numberOfStudents as number) > 0 &&
 		Boolean(reason) &&
 		reason.length <= MAX_REASON_LENGTH
+		&& resources.every((resource) =>
+			VENUE_RESOURCES.includes(resource as (typeof VENUE_RESOURCES)[number]),
+		)
     ) {
         return {
             venueId: body.venueId,
@@ -97,6 +105,7 @@ function parseBookingData(value: unknown): BookingData | null {
             date,
             numberOfStudents: numberOfStudents as number,
             reason,
+			resources: [...new Set(resources)],
         };
     }
 
@@ -197,6 +206,13 @@ export async function POST(request: Request) {
 				{ status: 400 }
 			);
 		}
+		const availableResources = venue.resources ?? [];
+		if (bookingData.resources.some((resource) => !availableResources.includes(resource))) {
+			return NextResponse.json(
+				{ message: "One or more selected resources are not available in this venue" },
+				{ status: 400 },
+			);
+		}
 
 		const { start, end } = getDayRange(bookingData.date);
 
@@ -226,6 +242,7 @@ export async function POST(request: Request) {
 			ending_time: bookingData.endingTime,
 			date: bookingData.date,
 			numberofStudents: bookingData.numberOfStudents,
+			resources: bookingData.resources,
 			reason: bookingData.reason,
 		});
 
