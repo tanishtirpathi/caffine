@@ -42,24 +42,6 @@ function getUserId(session: unknown) {
 	const userId = session.userId;
 	return typeof userId === "string" && mongoose.isValidObjectId(userId) ? userId : null;
 }
-//! ending time and starting time management 
-function getDayRange(date: string) {
-	const start = new Date(`${date}T00:00:00.000Z`);
-    start.setUTCHours(0, 0, 0, 0);
-
-    const end = new Date(start);
-    end.setUTCDate(end.getUTCDate() + 1);
-
-    return { start, end };
-}
-
-function isBeforeToday(date: Date) {
-	const today = new Date();
-	const todayKey = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
-	const bookingKey = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-
-	return bookingKey < todayKey;
-}
 //! this is the data we are getting from frontend and I am validating and this is purely ai writtern
 function parseBookingData(value: unknown): BookingData | null {
     if (typeof value !== "object" || value === null) {
@@ -214,12 +196,10 @@ export async function POST(request: Request) {
 			);
 		}
 
-		const { start, end } = getDayRange(bookingData.date);
-
-
 		const existingBookings = await BookingModel.find({
 			venue_id: bookingData.venueId,
-			date: { $gte: start, $lt: end },
+			// Booking dates are stored as YYYY-MM-DD strings, so compare the exact day.
+			date: bookingData.date,
 			status: { $in: bookingStatuses },
 		}).select("starting_time ending_time").lean();
 
@@ -232,7 +212,10 @@ export async function POST(request: Request) {
 		});
 
 		if (hasConflict) {
-			return NextResponse.json({ message: "Venue is already booked for that time" }, { status: 409 });
+			return NextResponse.json(
+				{ message: "Venue is already booked for that time" },
+				{ status: 409 },
+			);
 		}
 
 		const booking = await BookingModel.create({
