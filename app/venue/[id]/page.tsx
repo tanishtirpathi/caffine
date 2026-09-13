@@ -16,8 +16,19 @@ type Venue = {
   resources: string[];
 };
 
+type VenueSuggestion = Pick<Venue, "_id" | "name" | "building" | "capacity" | "images" | "resources">;
+
+type Booking = {
+  venue_id?: string | { _id?: string };
+  date: string;
+  starting_time: string;
+  ending_time: string;
+  status: string;
+};
+
 const timeSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 const MAX_REASON_LENGTH = 250;
+const VENUE_CONFLICT_MESSAGE = "Venue is already booked for that time";
 
 export default function VenueDetailsPage() {
   const params = useParams<{ id: string }>();
@@ -34,6 +45,7 @@ export default function VenueDetailsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [suggestions, setSuggestions] = useState<VenueSuggestion[]>([]);
 
   useEffect(() => {
     const loadVenue = async () => {
@@ -69,6 +81,7 @@ function getTodayDate() {
     setSubmitting(true);
     setError("");
     setMessage("");
+    setSuggestions([]);
 
     try {
       const response = await fetch("/api/booking", {
@@ -94,15 +107,66 @@ function getTodayDate() {
         setError(data.message);
         return;
       }
+      if (response.status === 409) {
+        if (data.message !== VENUE_CONFLICT_MESSAGE) {
+          throw new Error(data.message || "Booking request failed");
+        }
+
+        // Keep the user's form values intact while the browser finds alternatives.
+        setError(VENUE_CONFLICT_MESSAGE);
+        setSuggestions(await findVenueSuggestions());
+        return;
+      }
       if (!response.ok) throw new Error(data.message || "Booking request failed");
       setMessage("Booking request sent successfully.");
       setReason("");
+      setSuggestions([]);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Booking request failed");
     } finally {
       setSubmitting(false);
     }
   };
+
+  async function findVenueSuggestions(): Promise<VenueSuggestion[]> {
+    try {
+      // Suggestions are deliberately calculated in the UI after the backend reports
+      // a conflict, so the booking endpoint remains responsible only for booking.
+      const [venueResponse, bookingResponse] = await Promise.all([
+        fetch("/api/venue", { cache: "no-store" }),
+        fetch("/api/booking/all", { cache: "no-store" }),
+      ]);
+      const venueData = await venueResponse.json();
+      const bookingData = await bookingResponse.json();
+
+      if (!venueResponse.ok || !bookingResponse.ok) return [];
+
+      const allVenues: VenueSuggestion[] = Array.isArray(venueData.venues) ? venueData.venues : [];
+      const allBookings: Booking[] = Array.isArray(bookingData.bookings) ? bookingData.bookings : [];
+      const requestedStart = timeSlots.indexOf(startingTime);
+      const requestedEnd = timeSlots.indexOf(endingTime);
+      const blockedVenueIds = new Set(
+        allBookings
+          .filter((booking) => booking.date === date && (booking.status === "pending" || booking.status === "approved"))
+          .filter((booking) => {
+            const existingStart = timeSlots.indexOf(booking.starting_time);
+            const existingEnd = timeSlots.indexOf(booking.ending_time);
+            return requestedStart < existingEnd && requestedEnd > existingStart;
+          })
+          .map((booking) => typeof booking.venue_id === "string" ? booking.venue_id : booking.venue_id?._id)
+          .filter((venueId): venueId is string => Boolean(venueId)),
+      );
+
+      // Capacity is the primary match: show spaces that fit the group and are closest
+      // to the original venue, while excluding the venue that just conflicted.
+      return allVenues
+        .filter((candidate) => candidate._id !== params.id && candidate.capacity >= Number(numberOfStudents) && !blockedVenueIds.has(candidate._id))
+        .sort((first, second) => Math.abs(first.capacity - (venue?.capacity ?? 0)) - Math.abs(second.capacity - (venue?.capacity ?? 0)))
+        .slice(0, 3);
+    } catch {
+      return [];
+    }
+  }
 
   const showPreviousImage = () => {
     if (!venue?.images?.length) return;
@@ -173,6 +237,7 @@ function getTodayDate() {
                 <label className="block text-sm font-medium">What is the event for?<textarea required rows={3} maxLength={MAX_REASON_LENGTH} value={reason} onChange={(event) => setReason(event.target.value)} className="mt-2 w-full resize-none rounded-xl border border-black/10 px-4 py-3 outline-none focus:border-[#E8B928]" /><span className="mt-1 block text-right text-xs text-slate-500">{reason.length}/{MAX_REASON_LENGTH}</span></label>
               </div>
               {error && <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+              {suggestions.length > 0 && <div className="mt-4 rounded-2xl border border-[#E8B928]/40 bg-[#FFF9E7] p-4"><div className="flex items-start gap-3"><div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#E8B928] text-[#101622]"><Building2 size={17} /></div><div><p className="text-sm font-semibold text-[#101622]">Try a similar available venue</p><p className="mt-1 text-xs leading-5 text-[#8E6A08]">These spaces have a similar capacity and are free for your selected time.</p></div></div><div className="mt-3 space-y-2">{suggestions.map((suggestion) => <Link key={suggestion._id} href={`/venue/${suggestion._id}`} className="flex items-center justify-between gap-3 rounded-xl border border-[#E8B928]/30 bg-white px-3 py-3 transition hover:border-[#E8B928] hover:shadow-sm"><span className="min-w-0"><span className="block truncate text-sm font-semibold text-[#101622]">{suggestion.name}</span><span className="mt-1 block text-xs text-slate-500">{suggestion.building} · Capacity {suggestion.capacity}</span></span><ChevronRight size={17} className="shrink-0 text-[#8E6A08]" /></Link>)}</div></div>}
               {message && <p className="mt-4 rounded-xl bg-green-50 p-3 text-sm text-green-700">{message}</p>}
               <button disabled={submitting} className="mt-6 w-full rounded-xl bg-[#E8B928] px-5 py-3.5 text-sm font-semibold text-[#101622] transition hover:bg-[#d9ab1e] disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Sending request..." : "Request booking"}</button>
             </form>
