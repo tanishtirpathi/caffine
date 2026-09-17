@@ -17,6 +17,7 @@ export interface BookingDocument {
 	resources: string[];
 	status: BookingStatus;
 	reason: string;
+	slot_keys: string[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -44,8 +45,24 @@ const BookingSchema = new Schema<BookingDocument>(
 			default: "pending", // pending by default, will be approved or rejected by admin
 		},
 		reason: { type: String, required: true, trim: true }, // reason for booking the venue, will be shown to admin while approving or rejecting the booking
+	
+	slot_keys: {
+	type: [String],
+	required: true,
+}
 	},
 	{ timestamps: true }
+);
+BookingSchema.index(
+  {
+    slot_keys: 1,
+  },
+  {
+    unique: true,
+    partialFilterExpression: {
+      status: { $in: ["pending", "approved"] },
+    },
+  }
 );
 
 const BookingModel =

@@ -15,7 +15,7 @@ export default function Name({ scale = 0.5 }: { scale?: number }) {
       <h2 className="flex items-center leading-none">
         <span>booksp</span>
         <span 
-          className="rounded-full bg-[#E8B928]"
+          className="rounded-full bg-[#1677FF]"
           style={{
             width: `${baseDotSize * scale}px`,
             height: `${baseDotSize * scale}px`,
