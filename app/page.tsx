@@ -29,15 +29,14 @@ export default function Home() {
   }, [router]);
 
   return (
-    <main className="min-h-screen bg-white text-[#0B1120]">
+    <main className="min-h-screen bg-[#F7FAFF] text-[#102A43]">
       <Navbar />
-
       {/* HERO */}
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[480px] w-[680px] -translate-x-1/2 rounded-full bg-[#E8B928]/10 blur-3xl" />
+        <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[480px] w-[680px] -translate-x-1/2 rounded-full bg-[#1677FF]/10 blur-3xl" />
 
         <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-20 pt-20 text-center sm:pt-28">  
-          <h1 className="max-w-4xl text-5xl leading-[1.05] tracking-[-0.045em] text-[#0B1120] sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl text-5xl leading-[1.05] tracking-[-0.045em] text-[#102A43] sm:text-6xl lg:text-7xl">
             <span className="block font-serif italic font-light">Your campus </span>
             <span className="block">One Booking spot </span>
           </h1>
@@ -51,7 +50,7 @@ export default function Home() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/venue"
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8B928] px-6 py-3.5 text-sm font-semibold text-[#0B1120] shadow-lg shadow-[#E8B928]/25 transition hover:-translate-y-0.5 hover:bg-[#D9AB1E]"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#1677FF] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1677FF]/25 transition hover:-translate-y-0.5 hover:bg-[#0F5FCC]"
             >
               Check availability
               <ArrowRight
@@ -62,7 +61,7 @@ export default function Home() {
 
             <Link
               href="/auth/login"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-[#0B1120] shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-xl border border-[#D7E4F5] bg-white px-6 py-3.5 text-sm font-semibold text-[#102A43] shadow-sm transition hover:border-[#AFC8E8] hover:bg-[#F0F6FF]"
             >
               Login to book
             </Link>
@@ -75,9 +74,9 @@ export default function Home() {
       {/* FEATURES / HOW IT WORKS */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold text-[#C99A1F]">How it works</p>
+          <p className="text-sm font-semibold text-[#0F5FCC]">How it works</p>
 
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#0B1120] sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#102A43] sm:text-4xl">
             Everything you need to manage campus bookings.
           </h2>
 
@@ -114,10 +113,10 @@ export default function Home() {
       {/* CTA */}
       <section className="px-6 pb-20">
         <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-[#0B1120] px-6 py-16 text-center sm:px-12">
-          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 rounded-full bg-[#E8B928]/20 blur-3xl" />
+          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 rounded-full bg-[#1677FF]/25 blur-3xl" />
 
           <div className="relative">
-            <p className="text-sm font-semibold text-[#E8B928]">
+            <p className="text-sm font-semibold text-[#75B8FF]">
               Ready to book?
             </p>
 
@@ -132,7 +131,7 @@ export default function Home() {
 
             <Link
               href="/venue"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#E8B928] px-6 py-3.5 text-sm font-semibold text-[#0B1120] transition hover:bg-[#D9AB1E]"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#1677FF] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#0F5FCC]"
             >
               View campus availability
               <ArrowRight size={17} />
@@ -142,7 +141,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-200 bg-white">
+      <footer className="border-t border-[#D7E4F5] bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Bookspot</p>
           <p>Smart campus resource management</p>
@@ -180,9 +179,9 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#E8B928]/50 hover:shadow-lg hover:shadow-[#E8B928]/10">
+    <div className="group rounded-2xl border border-[#D7E4F5] bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#1677FF]/50 hover:shadow-lg hover:shadow-[#1677FF]/10">
       <div className="flex items-center justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0B1120] text-[#E8B928]">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#102A43] text-[#75B8FF]">
           {icon}
         </div>
 
@@ -191,7 +190,7 @@ function FeatureCard({
         </span>
       </div>
 
-      <h3 className="mt-7 text-lg font-semibold text-[#0B1120]">{title}</h3>
+      <h3 className="mt-7 text-lg font-semibold text-[#102A43]">{title}</h3>
 
       <p className="mt-3 text-sm leading-6 text-slate-500">{description}</p>
     </div>

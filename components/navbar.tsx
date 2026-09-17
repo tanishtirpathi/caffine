@@ -62,7 +62,7 @@ export default function Navbar() {
           href={homeHref}
           onClick={closeMenu}
           className="flex items-center rounded-lg focus-visible:outline-none focus-visible:ring-
-           focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
+           focus-visible:ring-[#1677FF] focus-visible:ring-offset-2"
         >
           <Name scale={0.7} />
         </Link>
@@ -85,7 +85,7 @@ export default function Navbar() {
               href="/profile"
               title={`Open ${user.name}'s profile`}
               aria-label={`Open ${user.name}'s profile`}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B1120] text-white transition hover:bg-[#161f33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] focus-visible:ring-offset-2"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#102A43] text-white transition hover:bg-[#1677FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1677FF] focus-visible:ring-offset-2"
             >
               <UserRound size={19} />
             </Link>
@@ -93,7 +93,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="hidden rounded-lg px-4 py-2 text-sm font-medium bg-[#0b1120] text-white/60 transition hover:bg-slate-900 hover:text-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] sm:block"
+                className="hidden rounded-lg bg-[#102A43] px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-[#1677FF] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1677FF] sm:block"
               >
                 Login
               </Link>
@@ -152,7 +152,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B928] ${active ? "bg-slate-100 text-[#0B1120]" : "text-slate-600 hover:bg-slate-100 hover:text-[#0B1120]"}`}
+      className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1677FF] ${active ? "bg-[#EAF3FF] text-[#102A43]" : "text-slate-600 hover:bg-[#F0F6FF] hover:text-[#102A43]"}`}
     >
       {icon}
       {label}
@@ -177,7 +177,7 @@ function MobileNavLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition active:scale-[0.98] ${active ? "bg-slate-100 text-[#0B1120]" : "text-slate-600 hover:bg-slate-100 hover:text-[#0B1120]"}`}
+      className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition active:scale-[0.98] ${active ? "bg-[#EAF3FF] text-[#102A43]" : "text-slate-600 hover:bg-[#F0F6FF] hover:text-[#102A43]"}`}
     >
       {icon}
       {label}
