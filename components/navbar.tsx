@@ -55,8 +55,8 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 mx-4 rounded-b-2xl border border-t-0 border-slate-200 bg-white/90
-     shadow-sm shadow-slate-900/5 backdrop-blur-xl sm:mx-10">
+    <header className="sticky top-10 z-50 mx-4 rounded-2xl border border-t-0 border-slate-200 bg-white/20
+     shadow-sm shadow-slate-900/20 backdrop-blur-xl sm:mx-10">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link
           href={homeHref}

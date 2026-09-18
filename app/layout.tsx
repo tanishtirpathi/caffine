@@ -1,5 +1,11 @@
+
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Instrument_Serif,
+  Roboto,
+} from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,10 +24,15 @@ const instrumentSerif = Instrument_Serif({
   weight: "400",
 });
 
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Bookspot",
-  description: "your campuse , one Book spot ",
-
+  description: "Your campus, one Bookspot",
   icons: {
     icon: "/icon.webp",
     shortcut: "/icon.webp",
@@ -35,9 +46,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}>
-      <head><link rel="icon" href="/favicon.ico" sizes="any" /></head>
-      <body className="min-h-full bg-[#f7f7f5] text-[#171A2B]">{children}</body>
+    <html
+      lang="en"
+      className={`
+        ${geistSans.variable}
+        ${geistMono.variable}
+        ${instrumentSerif.variable}
+        ${roboto.variable}
+        h-full
+        antialiased
+      `}
+    >
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
+
+      <body className="min-h-full bg-[#f7f7f5] text-[#171A2B]">
+        {children}
+      </body>
     </html>
   );
 }
+
