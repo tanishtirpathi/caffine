@@ -4,12 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Navbar from "../components/navbar";
-
+import Image from "next/image";
 import {
   ArrowRight,
   CheckCircle2,
   CalendarDays,
   MapPin,
+  Calendar,
 } from "lucide-react";
 
 export default function Home() {
@@ -32,114 +33,78 @@ export default function Home() {
     <main className="min-h-screen bg-[#F7FAFF] text-[#102A43]">
       <Navbar />
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[480px] w-[680px] -translate-x-1/2 rounded-full bg-[#1677FF]/10 blur-3xl" />
+      <section className="relative overflow-hidden mb-60">
 
-        <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-20 pt-20 text-center sm:pt-28">  
-          <h1 className="max-w-4xl text-5xl leading-[1.05] tracking-[-0.045em] text-[#102A43] sm:text-6xl lg:text-7xl">
-            <span className="block font-serif italic font-light">Your campus </span>
-            <span className="block">One Booking spot </span>
+
+        <div className="mx-auto flex max-w-full flex-col items-center px-6 pb-20 pt-30 text-center sm:pt-38">
+
+          <div className="mb-16 flex items-center gap-3">
+            <div className="flex items-center -space-x-3">
+              <div className="h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-sm">
+                <Image
+                  src="/logo/logo2.webp"
+                  alt="College 1"
+                  width={36}
+                  height={36}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-sm">
+                <Image
+                  src="/logo/logo1.webp"
+                  alt="College 2"
+                  width={36}
+                  height={36}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-black text-xs font-semibold text-white shadow-sm">
+                +9
+              </div>
+            </div>
+
+            <h4 className="text-sm text-gray-500">
+              used by{" "}
+              <span className="font-bold text-gray-900">many colleges</span> and{" "}
+              <span className="font-bold text-gray-900">universities</span> to manage
+              their campus resources efficiently.
+            </h4>
+          </div>
+          <h1 className="max-w-6xl text-4xl leading-[1.05] tracking-[-0.045em] sm:text-6xl lg:text-6xl">
+            <span className="block font-main font-bold  text-[#000000]">Your campus </span>
+            <span className=" block font-bold font-main text-black/60">One Booking spot for collages</span>
           </h1>
-
           <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
             Find available venues, schedule events, and manage bookings
-            effortlessly with a simple platform built for modern campuses.
+            effortlessly.
           </p>
 
           {/* CTA */}
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="/venue"
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#1677FF] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1677FF]/25 transition hover:-translate-y-0.5 hover:bg-[#0F5FCC]"
+              className="group inline-flex items-center gap-2 rounded-full
+               bg-white/80 px-5 py-3 text-sm font-normal text-[#2377bc] shadow-md 
+               transition-colors hover:bg-gray-200 "
             >
+              <Calendar className="text-blue-500" />
               Check availability
-              <ArrowRight
-                size={17}
-                className="transition-transform group-hover:translate-x-1"
-              />
             </Link>
 
             <Link
               href="/auth/login"
-              className="inline-flex items-center justify-center rounded-xl border border-[#D7E4F5] bg-white px-6 py-3.5 text-sm font-semibold text-[#102A43] shadow-sm transition hover:border-[#AFC8E8] hover:bg-[#F0F6FF]"
+              className="group inline-flex items-center gap-1 px-2 py-3.5 text-sm font-normal text-[#2377bc] hover:text-[#1677FF]"
             >
               Login to book
+              <ArrowRight
+                size={17}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
             </Link>
           </div>
 
         </div>
       </section>
-
-
-      {/* FEATURES / HOW IT WORKS */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold text-[#0F5FCC]">How it works</p>
-
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#102A43] sm:text-4xl">
-            Everything you need to manage campus bookings.
-          </h2>
-
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            Bookspot keeps the entire booking process simple while helping
-            prevent scheduling conflicts
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-5 sm:grid-cols-3">
-          <FeatureCard
-            number="01"
-            icon={<MapPin size={20} />}
-            title="Find a venue"
-            description="Browse campus venues and instantly check their availability for any date and time."
-          />
-
-          <FeatureCard
-            number="02"
-            icon={<CalendarDays size={20} />}
-            title="Request a booking"
-            description="Submit your event details and request the venue you need in just a few steps."
-          />
-
-          <FeatureCard
-            number="03"
-            icon={<CheckCircle2 size={20} />}
-            title="Avoid conflicts"
-            description="Bookspot helps identify unavailable slots and makes finding alternatives easier."
-          />
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-6 pb-20">
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-[#0B1120] px-6 py-16 text-center sm:px-12">
-          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 rounded-full bg-[#1677FF]/25 blur-3xl" />
-
-          <div className="relative">
-            <p className="text-sm font-semibold text-[#75B8FF]">
-              Ready to book?
-            </p>
-
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Find your next campus space.
-            </h2>
-
-            <p className="mx-auto mt-4 max-w-lg leading-7 text-slate-400">
-              Check availability across campus and find the right space for
-              your next class, meeting, seminar, or event.
-            </p>
-
-            <Link
-              href="/venue"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#1677FF] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#0F5FCC]"
-            >
-              View campus availability
-              <ArrowRight size={17} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer className="border-t border-[#D7E4F5] bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">

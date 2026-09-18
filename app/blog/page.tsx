@@ -77,32 +77,32 @@ const implementationSteps = [
 
 export default function TechnicalBlogPage() {
   return (
-    <main className="min-h-screen bg-white text-zinc-900">
+    <main className="min-h-screen bg-[#F5FAFF] text-[#102A43]">
       <Navbar />
 
       <article>
         <header className="mx-auto max-w-4xl px-6 pb-16 pt-24 sm:px-10 sm:pt-32">
-          <p className="text-sm font-medium text-amber-700">Our case study , Bookspot</p>
-          <h1 className="mt-6 max-w-4xl text-5xl font-light font-serif leading-[1.05] tracking-[-0.03em] text-zinc-950 sm:text-6xl">
+          <p className="text-sm font-medium text-[#1677FF]">Our case study , Bookspot</p>
+          <h1 className="mt-6 max-w-4xl text-5xl font-light font-serif leading-[1.05] tracking-[-0.03em] text-[#0B1120] sm:text-6xl">
             How  we made campus venue booking faster, clearer,easier, and ready for scale
           </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-600">
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">
             Bookspot is a booking platform for shared campus spaces, built on Next.js, MongoDB, and Redis. This is the
             technical story behind the system: the cache-aside pattern on the read path, and the load test that measured the difference.
           </p>
-          <div className="mt-10 flex flex-wrap gap-2 text-sm text-zinc-500">
-            <span className="rounded-full border border-zinc-200 px-3 py-1.5">Bookspot</span>
-            <span className="rounded-full border border-zinc-200 px-3 py-1.5">Backend & performance</span>
-            <span className="rounded-full border border-zinc-200 px-3 py-1.5">5 min read</span>
-            <span className="rounded-full border border-zinc-200 px-3 py-1.5">Technical Blog</span>
+          <div className="mt-10 flex flex-wrap gap-2 text-sm text-slate-500">
+            <span className="rounded-full border border-[#D7E4F5] bg-white px-3 py-1.5">Bookspot</span>
+            <span className="rounded-full border border-[#D7E4F5] bg-white px-3 py-1.5">Backend & performance</span>
+            <span className="rounded-full border border-[#D7E4F5] bg-white px-3 py-1.5">5 min read</span>
+            <span className="rounded-full border border-[#D7E4F5] bg-white px-3 py-1.5">Technical Blog</span>
 
           </div>
         </header>
 
-        <section className="border-y border-zinc-200 bg-zinc-50">
+        <section className="border-y border-[#D7E4F5] bg-[#EDF5FF]">
           <div className="mx-auto max-w-4xl px-6 py-16 sm:px-10 sm:py-20">
-            <p className="font-serif text-4xl italic leading-tight text-zinc-950 sm:text-5xl">Why I built this</p>
-            <div className="mt-8 space-y-6 text-base leading-8 text-zinc-600 sm:text-lg">
+            <p className="font-serif text-4xl italic leading-tight text-[#0B1120] sm:text-5xl">Why I built this</p>
+            <div className="mt-8 space-y-6 text-base leading-8 text-slate-600 sm:text-lg">
               <p>
                 Campus spaces are shared resources, but the process for booking them is usually informal enough to fail:
                 students ask around, administrators track requests in a spreadsheet, and two people can end up holding
@@ -142,7 +142,7 @@ export default function TechnicalBlogPage() {
               text="Two overlapping requests approved at nearly the same time is the failure mode that matters most, and it has to be closed at the database layer."
             />
           </div>
-          <p className="mt-10 max-w-3xl text-lg leading-8 text-zinc-600">
+          <p className="mt-10 max-w-3xl text-lg leading-8 text-slate-600">
             Those are different problems with different fixes. Discovery is where caching pays off, because the same
             read gets issued thousands of times for data that changes infrequently. Validation and conflict detection
             are exactly where you don't want a cache in the loop &mdash; they need to see the current, authoritative state
@@ -150,17 +150,17 @@ export default function TechnicalBlogPage() {
           </p>
         </section>
 
-        <section className="border-y border-zinc-200 bg-zinc-50">
+        <section className="border-y border-[#D7E4F5] bg-[#F2F8FF]">
           <div className="mx-auto max-w-4xl px-6 py-20 sm:px-10 sm:py-24">
             <SectionHeading eyebrow="What we used" title="Every layer has one job" />
-            <div className="mt-12 divide-y divide-zinc-200 border-y border-zinc-200">
+            <div className="mt-12 divide-y divide-[#D7E4F5] border-y border-[#D7E4F5]">
               {stack.map(({ icon: Icon, name, why }) => (
                 <div key={name} className="grid gap-4 py-7 sm:grid-cols-[48px_220px_1fr] sm:items-start">
-                  <div className="grid size-10 place-items-center rounded-full bg-amber-100 text-amber-700">
+                  <div className="grid size-10 place-items-center rounded-full bg-[#EAF3FF] text-[#1677FF]">
                     <Icon size={18} />
                   </div>
-                  <h3 className="text-lg font-semibold text-zinc-950">{name}</h3>
-                  <p className="leading-7 text-zinc-600">{why}</p>
+                  <h3 className="text-lg font-semibold text-[#102A43]">{name}</h3>
+                  <p className="leading-7 text-slate-600">{why}</p>
                 </div>
               ))}
             </div>
@@ -169,20 +169,20 @@ export default function TechnicalBlogPage() {
 
         <section className="mx-auto max-w-4xl px-6 py-20 sm:px-10 sm:py-24">
           <SectionHeading eyebrow="How the system works" title="A cache-aside read path over an authoritative database" />
-          <div className="mt-12 space-y-0 border-l border-zinc-200 pl-6 sm:pl-10">
+          <div className="mt-12 space-y-0 border-l border-[#D7E4F5] pl-6 sm:pl-10">
             {implementationSteps.map(([number, title, text]) => (
               <div key={number} className="relative pb-12 last:pb-0">
-                <span className="absolute -left-[43px] top-0 grid size-6 place-items-center rounded-full border border-amber-500 bg-white text-[11px] font-semibold text-amber-700 sm:-left-[55px]">
+                <span className="absolute -left-[43px] top-0 grid size-6 place-items-center rounded-full border border-[#1677FF] bg-white text-[11px] font-semibold text-[#1677FF] sm:-left-[55px]">
                   {number}
                 </span>
-                <h3 className="text-xl font-semibold text-zinc-950">{title}</h3>
-                <p className="mt-3 max-w-2xl leading-7 text-zinc-600">{text}</p>
+                <h3 className="text-xl font-semibold text-[#102A43]">{title}</h3>
+                <p className="mt-3 max-w-2xl leading-7 text-slate-600">{text}</p>
               </div>
             ))}
           </div>
-          <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
-            <p className="text-sm font-semibold text-amber-800">The important boundary</p>
-            <p className="mt-3 text-lg leading-8 text-zinc-800">
+          <div className="mt-14 rounded-2xl border border-[#CFE3FF] bg-[#EAF3FF] p-6 sm:p-8">
+            <p className="text-sm font-semibold text-[#102A43]">The important boundary</p>
+            <p className="mt-3 text-lg leading-8 text-slate-700">
               Redis makes reads cheaper, and that's the whole extent of its job. It never decides whether a booking is
               valid. The booking handler still queries MongoDB directly for the venue, capacity, requested resources,
               date, time range, and any overlapping pending or approved bookings, using the compound index on (venue,
@@ -191,13 +191,13 @@ export default function TechnicalBlogPage() {
           </div>
         </section>
 
-        <section className="border-y border-zinc-200 bg-zinc-50">
+        <section className="border-y border-[#D7E4F5] bg-[#F2F8FF]">
           <div className="mx-auto max-w-5xl px-6 py-20 sm:px-10 sm:py-24">
             <div className="max-w-3xl">
-              <p className="font-serif text-4xl italic leading-tight text-zinc-950 sm:text-5xl">
+              <p className="font-serif text-4xl italic leading-tight text-[#0B1120] sm:text-5xl">
                 The numbers worth putting on the slide
               </p>
-              <p className="mt-6 text-base leading-7 text-zinc-600">
+              <p className="mt-6 text-base leading-7 text-slate-600">
                 Load-tested with k6, ramping to 1,000 concurrent virtual users against the venue listing endpoint, same
                 script run before and after Redis was added to the read path. 
               </p>
@@ -205,7 +205,7 @@ export default function TechnicalBlogPage() {
             <div className="mt-12 overflow-x-auto">
               <table className="w-full min-w-[680px] border-collapse text-left">
                 <thead>
-                  <tr className="border-b border-zinc-300 text-sm text-zinc-500">
+                  <tr className="border-b border-[#D7E4F5] text-sm text-slate-500">
                     <th className="pb-5 pr-6 font-medium">Metric</th>
                     <th className="pb-5 px-6 text-right font-medium">Before Redis</th>
                     <th className="pb-5 px-6 text-right font-medium">After Redis</th>
@@ -214,11 +214,11 @@ export default function TechnicalBlogPage() {
                 </thead>
                 <tbody>
                   {benchmarkRows.map(({ metric, before, after, improvement, icon: Icon }) => (
-                    <tr key={metric} className="border-b border-zinc-200 text-base">
-                      <th className="py-7 pr-6 font-normal text-zinc-800">{metric}</th>
-                      <td className="px-6 py-7 text-right text-zinc-500">{before}</td>
-                      <td className="px-6 py-7 text-right text-lg font-semibold text-zinc-950">{after}</td>
-                      <td className="whitespace-nowrap pl-6 py-7 text-right font-semibold text-amber-700">
+                    <tr key={metric} className="border-b border-[#D7E4F5] text-base">
+                      <th className="py-7 pr-6 font-normal text-[#102A43]">{metric}</th>
+                      <td className="px-6 py-7 text-right text-slate-500">{before}</td>
+                      <td className="px-6 py-7 text-right text-lg font-semibold text-[#0B1120]">{after}</td>
+                      <td className="whitespace-nowrap pl-6 py-7 text-right font-semibold text-[#1677FF]">
                         <span className="inline-flex items-center gap-2">
                           <Icon size={16} />
                           {improvement}
@@ -261,25 +261,10 @@ export default function TechnicalBlogPage() {
           </div>
         </section>
 
-        <section className="border-t border-zinc-200 bg-amber-400 text-zinc-950">
-          <div className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-16 sm:px-10 sm:py-20 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-zinc-950/70">The takeaway</p>
-              <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">
-                Performance is a product feature when it gives people confidence in the system.
-              </h2>
-            </div>
-            <Link
-              href="/venue"
-              className="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-zinc-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
-            >
-              Explore venues <ArrowUpRight size={16} />
-            </Link>
-          </div>
-        </section>
 
-        <footer className="border-t border-zinc-200 bg-white">
-          <div className="mx-auto flex max-w-4xl flex-col gap-2 px-6 py-8 text-sm text-zinc-400 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+
+        <footer className="border-t border-[#D7E4F5] bg-white">
+          <div className="mx-auto flex max-w-4xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-10">
             <p>Bookspot / Technical blog</p>
             <p>Built for clearer campus coordination.</p>
           </div>
@@ -292,28 +277,28 @@ export default function TechnicalBlogPage() {
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="max-w-2xl">
-      <p className="text-sm font-semibold text-amber-700">{eyebrow}</p>
-      <h2 className="mt-4 text-4xl font-medium leading-tight tracking-[-0.03em] text-zinc-950 sm:text-5xl">{title}</h2>
+      <p className="text-sm font-semibold text-[#1677FF]">{eyebrow}</p>
+      <h2 className="mt-4 text-4xl font-medium leading-tight tracking-[-0.03em] text-[#102A43] sm:text-5xl">{title}</h2>
     </div>
   );
 }
 
 function Callout({ number, title, text }: { number: string; title: string; text: string }) {
   return (
-    <article className="border-t border-zinc-300 pt-5">
-      <p className="text-xs font-bold text-amber-700">{number}</p>
-      <h3 className="mt-5 text-xl font-semibold text-zinc-950">{title}</h3>
-      <p className="mt-3 text-sm leading-6 text-zinc-500">{text}</p>
+    <article className="border-t border-[#D7E4F5] pt-5">
+      <p className="text-xs font-bold text-[#1677FF]">{number}</p>
+      <h3 className="mt-5 text-xl font-semibold text-[#102A43]">{title}</h3>
+      <p className="mt-3 text-sm leading-6 text-slate-500">{text}</p>
     </article>
   );
 }
 
 function MetricCard({ value, label, detail }: { value: string; label: string; detail: string }) {
   return (
-    <div className="border border-zinc-200 bg-white p-5">
-      <p className="text-3xl font-semibold text-zinc-950">{value}</p>
-      <p className="mt-3 text-sm font-semibold text-zinc-700">{label}</p>
-      <p className="mt-1 text-xs text-zinc-400">{detail}</p>
+    <div className="border border-[#D7E4F5] bg-white p-5">
+      <p className="text-3xl font-semibold text-[#0B1120]">{value}</p>
+      <p className="mt-3 text-sm font-semibold text-[#102A43]">{label}</p>
+      <p className="mt-1 text-xs text-slate-500">{detail}</p>
     </div>
   );
 }

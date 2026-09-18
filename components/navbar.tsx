@@ -7,6 +7,7 @@ import {
   Info,
   LayoutDashboard,
   Menu,
+  LogIn,
   Newspaper,
   UserRound,
   X,
@@ -55,8 +56,8 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 mx-4 rounded-b-2xl border border-t-0 border-slate-200 bg-white/90
-     shadow-sm shadow-slate-900/5 backdrop-blur-xl sm:mx-10">
+    <header className="sticky top-7 z-50 mx-4 rounded-2xl border border-t-0 border-slate-200 bg-white/20
+     shadow-sm shadow-slate-900/20 backdrop-blur-xl sm:mx-10">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link
           href={homeHref}
@@ -67,7 +68,7 @@ export default function Navbar() {
           <Name scale={0.7} />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-1 md:flex font-main font-bold  " aria-label="Main navigation">
           {navigation.map(({ href, label, icon: Icon }) => (
             <NavLink
               key={href}
@@ -93,9 +94,13 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="hidden rounded-lg bg-[#102A43] px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-[#1677FF] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1677FF] sm:block"
+                className="hidden rounded-xl
+                bg-[#252729] px-4 py-2  font-medium text-white/80 font-main 
+                transition hover:bg-[#545454] hover:text-white focus-visible:outline-none 
+                focus-visible:ring-2 focus-visible:ring-[#1677FF] sm:block "
+
               >
-                Login
+             sign In 
               </Link>
             </>
           )}
