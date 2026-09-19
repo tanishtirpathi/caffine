@@ -1,4 +1,4 @@
-export default function Name({ scale = 0.5 }: { scale?: number }) {
+export default function Name({ scale = 0.5, light = false }: { scale?: number; light?: boolean }) {
   // Define base measurements in pixels or rems
   const baseFontSize = 48; // equivalent to text-5xl (3rem)
   const baseDotSize = 28;  // equivalent to w-7 h-7 (1.75rem)
@@ -6,7 +6,7 @@ export default function Name({ scale = 0.5 }: { scale?: number }) {
 
   return (
     <div 
-      className="flex items-center justify-center font-bold text-[#171A2B]"
+      className={`flex items-center justify-center font-bold ${light ? "text-[#111827]" : "text-white/90"}`}
       style={{
         fontSize: `${baseFontSize * scale}px`,
         letterSpacing: `${baseLetterSpacing * scale}px`,
@@ -15,7 +15,7 @@ export default function Name({ scale = 0.5 }: { scale?: number }) {
       <h2 className="flex items-center leading-none">
         <span>booksp</span>
         <span 
-          className="rounded-full bg-[#1975c1]"
+          className="rounded-full bg-[#d19d00] "
           style={{
             width: `${baseDotSize * scale}px`,
             height: `${baseDotSize * scale}px`,
