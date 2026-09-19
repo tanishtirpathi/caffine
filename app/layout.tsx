@@ -2,21 +2,15 @@
 import type { Metadata } from "next";
 import {
   Geist,
-  Geist_Mono,
+  EB_Garamond ,
   Instrument_Serif,
-  Roboto,
+  Inter,
 } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const garamond = EB_Garamond({ subsets: ["latin"], variable: "--font-garamond" });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -24,11 +18,6 @@ const instrumentSerif = Instrument_Serif({
   weight: "400",
 });
 
-const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Bookspot",
@@ -49,10 +38,10 @@ export default function RootLayout({
     <html
       lang="en"
       className={`
-        ${geistSans.variable}
-        ${geistMono.variable}
+
         ${instrumentSerif.variable}
-        ${roboto.variable}
+        ${garamond.variable}
+       ${geist.variable} ${inter.variable}
         h-full
         antialiased
       `}
@@ -61,7 +50,8 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
 
-      <body className="min-h-full bg-[#f7f7f5] text-[#171A2B]">
+      <body className="min-h-full bg-[#03070d]">
+
         {children}
       </body>
     </html>

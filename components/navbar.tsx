@@ -7,7 +7,6 @@ import {
   Info,
   LayoutDashboard,
   Menu,
-  LogIn,
   Newspaper,
   UserRound,
   X,
@@ -26,7 +25,7 @@ const navigation = [
   { href: "/faqs", label: "FAQs", icon: CircleHelp },
 ];
 
-export default function Navbar() {
+export default function Navbar({ light = false }: { light?: boolean }) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<{ name: string; role: string } | null>(null);
@@ -56,16 +55,15 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-7 z-50 mx-4 rounded-2xl border border-t-0 border-slate-200 bg-white/20
-     shadow-sm shadow-slate-900/20 backdrop-blur-xl sm:mx-10">
+    <header className={`sticky top-5 z-50 mx-4 rounded-2xl sm:mx-10 ${light ? "text-[#111827]" : ""}`}>
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link
           href={homeHref}
           onClick={closeMenu}
-          className="flex items-center rounded-lg focus-visible:outline-none focus-visible:ring-
-           focus-visible:ring-[#1677FF] focus-visible:ring-offset-2"
+          className="flex items-center rounded-lg focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-[#78caff] focus-visible:ring-offset-2"
         >
-          <Name scale={0.7} />
+          <Name scale={0.7} light={light} />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex font-main font-bold  " aria-label="Main navigation">
@@ -76,6 +74,7 @@ export default function Navbar() {
               label={href === "/" && user ? "Dashboard" : label}
               icon={<Icon size={16} />}
               active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
+              light={light}
             />
           ))}
         </nav>
@@ -86,7 +85,7 @@ export default function Navbar() {
               href="/profile"
               title={`Open ${user.name}'s profile`}
               aria-label={`Open ${user.name}'s profile`}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#102A43] text-white transition hover:bg-[#1677FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1677FF] focus-visible:ring-offset-2"
+              className={`flex h-10 w-10 items-center justify-center rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#78caff] focus-visible:ring-offset-2 ${light ? "border-[#111827]/10 bg-white/70 text-[#111827] hover:bg-white" : "border-white/15 bg-white/10 text-white hover:bg-[#1677FF]"}`}
             >
               <UserRound size={19} />
             </Link>
@@ -94,10 +93,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="hidden rounded-xl
-                bg-[#252729] px-4 py-2  font-medium text-white/80 font-main 
-                transition hover:bg-[#545454] hover:text-white focus-visible:outline-none 
-                focus-visible:ring-2 focus-visible:ring-[#1677FF] sm:block "
+                className={`hidden rounded-xl border px-4 py-2 font-medium font-main transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#78caff] sm:block ${light ? "border-[#111827]/15 bg-[#111827] text-white hover:bg-[#273449]" : "border-white/15 bg-white/10 text-white/90 hover:border-white/30 hover:bg-white/20 hover:text-white"}`}
 
               >
              sign In 
@@ -110,7 +106,7 @@ export default function Navbar() {
             aria-controls="mobile-navigation"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             onClick={() => setIsMenuOpen((open) => !open)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-[#0B1120] transition hover:bg-slate-100 md:hidden"
+            className={`flex h-10 w-10 items-center justify-center rounded-lg border transition hover:bg-white/10 md:hidden ${light ? "border-[#111827]/15 text-[#111827]" : "border-white/15 text-white"}`}
           >
             {isMenuOpen ? <X size={19} /> : <Menu size={19} />}
           </button>
@@ -119,7 +115,7 @@ export default function Navbar() {
 
       <div
         id="mobile-navigation"
-        className={`${isMenuOpen ? "block" : "hidden"} border-t border-slate-200 md:hidden`}
+        className={`${isMenuOpen ? "block" : "hidden"} border-t md:hidden ${light ? "border-[#111827]/10" : "border-white/10"}`}
       >
         <nav className="grid gap-1 px-4 py-3" aria-label="Mobile navigation">
           {navigation.map(({ href, label, icon: Icon }) => (
@@ -130,6 +126,7 @@ export default function Navbar() {
               icon={<Icon size={17} />}
               active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
               onClick={closeMenu}
+              light={light}
             />
           ))}
         </nav>
@@ -148,16 +145,18 @@ function NavLink({
   icon,
   label,
   active,
+  light,
 }: {
   href: string;
   icon: React.ReactNode;
   label: string;
   active: boolean;
+  light: boolean;
 }) {
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1677FF] ${active ? "bg-[#EAF3FF] text-[#102A43]" : "text-slate-600 hover:bg-[#F0F6FF] hover:text-[#102A43]"}`}
+      className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#78caff] ${light ? (active ? "bg-white/70 text-[#111827]" : "text-[#536071] hover:bg-white/70 hover:text-[#111827]") : (active ? "bg-white/15 text-white" : "text-[#b8cde1] hover:bg-white/10 hover:text-white")}`}
     >
       {icon}
       {label}
@@ -171,18 +170,20 @@ function MobileNavLink({
   label,
   active,
   onClick,
+  light,
 }: {
   href: string;
   icon: React.ReactNode;
   label: string;
   active: boolean;
   onClick: () => void;
+  light: boolean;
 }) {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition active:scale-[0.98] ${active ? "bg-[#EAF3FF] text-[#102A43]" : "text-slate-600 hover:bg-[#F0F6FF] hover:text-[#102A43]"}`}
+      className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition active:scale-[0.98] ${light ? (active ? "bg-white/70 text-[#111827]" : "text-[#536071] hover:bg-white/70 hover:text-[#111827]") : (active ? "bg-white/15 text-white" : "text-[#b8cde1] hover:bg-white/10 hover:text-white")}`}
     >
       {icon}
       {label}
