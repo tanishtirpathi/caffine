@@ -2,10 +2,12 @@
 import type { Metadata } from "next";
 import {
   Geist,
-  EB_Garamond ,
+  EB_Garamond,
   Instrument_Serif,
   Inter,
 } from "next/font/google";
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 import "./globals.css";
 
 const garamond = EB_Garamond({ subsets: ["latin"], variable: "--font-garamond" });
@@ -17,7 +19,6 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
 });
-
 
 export const metadata: Metadata = {
   title: "Bookspot",
@@ -38,21 +39,23 @@ export default function RootLayout({
     <html
       lang="en"
       className={`
-
         ${instrumentSerif.variable}
         ${garamond.variable}
-       ${geist.variable} ${inter.variable}
-        h-full
-        antialiased
+        ${geist.variable}
+        ${inter.variable}
+        h-full antialiased
       `}
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
 
-      <body className="min-h-full bg-[#03070d]">
-
-        {children}
+      <body className="min-h-full bg-[#F8F8F8] text-[#1E293B]">
+        <div className="flex min-h-screen flex-col">
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

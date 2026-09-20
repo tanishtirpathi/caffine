@@ -1,4 +1,3 @@
-import Navbar from "../../components/navbar";
 import {
 	CircleHelp,
 	Plus,
@@ -70,8 +69,6 @@ const faqGroups = [
 export default function FaqsPage() {
 	return (
 		<main className="min-h-screen bg-white text-[#0B1120]">
-			<Navbar />
-
 			<section className="relative overflow-hidden border-b border-slate-200 bg-[#f7f7f5]">
 				<div className="pointer-events-none absolute -right-20 -top-22 size-96 rounded-full bg-[#E8B928]/15 blur-3xl" />
 				<div className="relative mx-auto max-w-6xl px-6 pb-16 pt-20 sm:pb-20 sm:pt-28">
@@ -112,9 +109,6 @@ export default function FaqsPage() {
 				
 				</div>
 			</section>
-
-			<footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between"><p>© 2026 Bookspot
-				</p><p>Smart campus resource management</p></div></footer>
 		</main>
 	);
 }

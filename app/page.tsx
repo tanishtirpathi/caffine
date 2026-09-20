@@ -1,13 +1,59 @@
 "use client";
+
 import Link from "next/link";
-import { NoiseTexture } from "@/components/ui/noise-texture";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Navbar from "../components/navbar";
-import { ArrowUpRight, CalendarDays, Check, ChevronRight, Clock3, MapPin, Search, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Building2,
+  CalendarDays,
+  Check,
+  ChevronRight,
+  Clock3,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+  Users2,
+} from "lucide-react";
 import { motion } from "motion/react";
 
 const MotionLink = motion.create(Link);
+
+const featureCards = [
+  {
+    title: "Campus-ready space discovery",
+    description:
+      "Browse classrooms, studios, labs, and meeting rooms with availability that updates in real time.",
+    icon: SearchIcon,
+  },
+  {
+    title: "One-step booking requests",
+    description:
+      "Submit a request with the right date, capacity, and equipment needs without chasing approvals manually.",
+    icon: CalendarIcon,
+  },
+  {
+    title: "Trusted access and visibility",
+    description:
+      "Keep bookings transparent for students and staff with clear status tracking and secure access checks.",
+    icon: ShieldIcon,
+  },
+];
+
+const processSteps = [
+  { title: "Find a space", text: "Filter by room type, capacity, and features that match your event or class." },
+  { title: "Request a booking", text: "Share your time, attendee count, and any equipment you need in minutes." },
+  { title: "Get approved", text: "Track the status in one place and coordinate with the campus team easily." },
+];
+
+const stats = [
+  { value: "150+", label: "bookable spaces" },
+  { value: "4 min", label: "average request time" },
+  { value: "98%", label: "approval visibility" },
+];
+
+const categoryPills = ["Lecture halls", "Labs", "Studios", "Meeting rooms", "Event spaces", "Sports halls"];
 
 export default function Home() {
   const router = useRouter();
@@ -26,165 +72,291 @@ export default function Home() {
   }, [router]);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#ffffff] text-[#101827] px-10 ">
-      <NoiseTexture/>
+    <main className="min-h-screen overflow-x-hidden bg-[#F8F8F8] text-[#1E293B]">
+      <div className="relative isolate">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.18),_transparent_25%),radial-gradient(circle_at_right,_rgba(26,54,93,0.10),_transparent_30%)]" />
 
-      <Navbar light />
-      <section className="relative mx-auto mt-5 max-w-6xl rounded-t-xl 
-      bg-[linear-gradient(to_bottom #b8b8b8_0%,#ffffff_100%)] 
-      px-5 pb-10 pt-12 sm:px-8 lg:px-10 lg:pb-15 lg:pt-15">
-        <NoiseTexture className="rounded-t-xl"/>
-          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-          <motion.div
-            className="relative z-10 max-w-lg"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.13, delayChildren: 0.15 } },
-            }}
-          >
-            <motion.h2
-              className="font-serif text-5xl font-medium leading-[0.88] tracking-[-0.05em] text-[#101827] sm:text-6xl lg:text-[5.2rem]"
-              variants={{
-                hidden: { opacity: 0, y: 24 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
-              }}
-            >
-              Find your
-              <span className="block italic text-[#d19d00]">
-                perfect space.
-              </span>
-            </motion.h2>
-            <motion.div
-              className="my-6 h-1 w-64 bg-[linear-gradient(90deg,transparent_0%,#69c9ff_22%,#dff7ff_50%,#69c9ff_78%,transparent_100%)]
-              [clip-path:polygon(0_50%,22%_42%,45%_42%,48%_0,52%_0,55%_42%,78%_42%,100%_50%,78%_58%,55%_58%,52%_100%,48%_100%,45%_58%,22%_58%)] opacity-90"
-              variants={{
-                hidden: { opacity: 0, scaleX: 0.35 },
-                visible: { opacity: 1, scaleX: 1, transition: { duration: 0.65, ease: "easeOut" } },
-              }}
-            />
-            <motion.p
-              className="mt-5 max-w-md font-sans text-sm leading-6 text-[#5b6573] sm:text-xs"
-              variants={{
-                hidden: { opacity: 0, y: 16 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
-              }}
-            >
-              Book classrooms, labs, halls, and every useful corner of your campus without the endless permission chase.
-            </motion.p>
+        <section className="mx-auto max-w-7xl px-4 pb-16 pt-5 sm:px-6 lg:px-8 lg:pb-20">
+          <div className="overflow-hidden rounded-[32px] border border-[#1A365D]/10 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.06)]">
+            <div className="relative px-5 pb-16 pt-6 sm:px-8 sm:pt-8 lg:px-10 lg:pb-20 lg:pt-10">
+              <div className="relative grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+                <motion.div
+                  className="max-w-xl"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                >
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#1A365D]/10 bg-[#1A365D]/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1A365D]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />
+                    Campus booking made simple
+                  </div>
 
-            <motion.div
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-              variants={{
-                hidden: { opacity: 0, y: 14 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
-              }}
-            >
-              <MotionLink
-                href="/venue"
-                className="group inline-flex items-center justify-center gap-2 
-                rounded-full bg-[#101827] px-6 py-3.5 text-sm font-semibold text-white
-                 shadow-[0_12px_25px_rgba(16,24,39,0.18)] transition hover:-translate-y-0.5 hover:bg-[#26334a]"
-                whileHover={{ y: -3, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                  <h1 className="font-[var(--font-geist)] text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-[#1E293B] sm:text-5xl lg:text-[4.3rem]">
+                    Book the right space
+                    <span className="mt-1 block text-[#1A365D]">for every moment.</span>
+                  </h1>
+
+                  <p className="mt-5 max-w-lg text-base leading-7 text-[#475569] sm:text-lg">
+                    Discover reliable campus venues, request bookings in minutes, and keep every event, class, or meeting organized from one place.
+                  </p>
+
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <MotionLink
+                      href="/venue"
+                      className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#1A365D] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#132848] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Explore venues
+                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </MotionLink>
+
+                    <MotionLink
+                      href="/auth/login"
+                      className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#1A365D]/15 bg-white px-6 py-3.5 text-sm font-semibold text-[#1A365D] transition-all duration-200 hover:border-[#1A365D]/25 hover:bg-[#F8F8F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Sign in to book
+                      <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </MotionLink>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-[#475569]">
+                    {stats.map((stat) => (
+                      <div key={stat.label} className="rounded-full border border-[#1A365D]/10 bg-[#F8F8F8] px-3 py-2">
+                        <span className="font-semibold text-[#1A365D]">{stat.value}</span>
+                        <span className="ml-2">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
+                >
+                  <div className="relative mx-auto max-w-[520px] rounded-[28px] border border-[#1A365D]/10 bg-[#EEF3F8] p-4 shadow-[0_26px_48px_rgba(26,54,93,0.10)] sm:p-6">
+                    <div className="absolute -right-10 -top-8 h-28 w-28 rounded-full bg-[#D4AF37]/25 blur-2xl" />
+                    <div className="absolute -bottom-10 -left-8 h-28 w-28 rounded-full bg-[#1A365D]/10 blur-2xl" />
+
+                    <div className="relative rounded-[24px] border border-white/80 bg-white/80 p-4 backdrop-blur-sm sm:p-5">
+                      <div className="flex items-center justify-between gap-4 border-b border-[#1A365D]/10 pb-4">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#64748B]">Today on campus</p>
+                          <h2 className="mt-2 font-[var(--font-geist)] text-2xl font-semibold text-[#1E293B]">Seminar Hall</h2>
+                        </div>
+                        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1A365D] text-white">
+                          <CalendarDays className="h-5 w-5" />
+                        </div>
+                      </div>
+
+                      <div className="mt-5 grid gap-4 sm:grid-cols-[1.3fr_0.7fr]">
+                        <div className="rounded-[20px] bg-[#1A365D] p-4 text-white shadow-[0_18px_28px_rgba(26,54,93,0.22)]">
+                          <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.14em] text-white/70">
+                            <span>Available</span>
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="h-2 w-2 rounded-full bg-[#D4AF37]" />
+                              Live
+                            </span>
+                          </div>
+
+                          <div className="mt-5 flex items-end justify-between gap-3">
+                            <div>
+                              <p className="font-[var(--font-geist)] text-3xl font-semibold tracking-[-0.05em]">120 seats</p>
+                              <p className="mt-2 flex items-center gap-1 text-xs text-white/70">
+                                <MapPin className="h-3.5 w-3.5" /> Main Block
+                              </p>
+                            </div>
+                            <div className="rounded-xl bg-white/10 p-2.5">
+                              <Building2 className="h-4 w-4 text-[#D4AF37]" />
+                            </div>
+                          </div>
+
+                          <div className="mt-5 grid grid-cols-4 gap-2 text-center text-[10px] text-white/80">
+                            {[
+                              { time: "09:00", active: false },
+                              { time: "11:30", active: true },
+                              { time: "14:00", active: false },
+                              { time: "16:30", active: false },
+                            ].map((slot) => (
+                              <div
+                                key={slot.time}
+                                className={`rounded-lg px-2 py-2 ${slot.active ? "bg-[#D4AF37] font-semibold text-[#1E293B]" : "bg-white/10"}`}
+                              >
+                                {slot.time}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <div className="rounded-[18px] border border-[#1A365D]/10 bg-[#F8F8F8] p-3">
+                            <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#64748B]">
+                              <BadgeCheck className="h-3.5 w-3.5 text-[#1A365D]" />
+                              Approved
+                            </div>
+                            <p className="mt-3 text-sm font-semibold text-[#1E293B]">Room 204</p>
+                            <p className="mt-1 text-xs text-[#64748B]">Just now</p>
+                          </div>
+
+                          <div className="rounded-[18px] border border-[#D4AF37]/30 bg-[#FFF9E9] p-3">
+                            <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#7C5E15]">
+                              <Clock3 className="h-3.5 w-3.5" />
+                              Next up
+                            </div>
+                            <p className="mt-3 text-sm font-semibold text-[#1E293B]">Lab 2 · 3:00 PM</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#64748B]">Why students choose Bookspot</p>
+              <h3 className="mt-2 font-[var(--font-geist)] text-3xl font-semibold tracking-[-0.05em] text-[#1E293B] sm:text-4xl">
+                Built for fast, confident bookings.
+              </h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {categoryPills.map((pill) => (
+                <span key={pill} className="rounded-full border border-[#1A365D]/10 bg-white px-3 py-1.5 text-xs font-medium text-[#475569]">
+                  {pill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {featureCards.map(({ title, description, icon: Icon }) => (
+              <motion.article
+                key={title}
+                className="group rounded-[26px] border border-[#1A365D]/10 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.03)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.06)]"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4 }}
               >
-                <CalendarDays size={17} className="text-[#f1c62c]" />
-                Explore venues
-                <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-1" />
-              </MotionLink>
-              <MotionLink
-                href="/auth/login"
-                className="group inline-flex items-center justify-center gap-1 px-3 py-3.5 text-sm font-semibold text-[#596372] transition hover:text-[#101827]"
-                whileHover={{ x: 4, color: "#0c0a0ace" }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Sign in to book
-                <ChevronRight size={17} className="transition-transform group-hover:translate-x-1" />
-              </MotionLink>
-            </motion.div>
-          </motion.div>
-          {/* Right side visual container */}
-          <motion.div
-            className="relative min-h-[280px] overflow-hidden rounded-[2rem] bg-[#dce9e9] 
-            p-5 shadow-[0_25px_70px_rgba(43,55,68,0.14)] sm:min-h-[330px] sm:p-7"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="absolute -right-16 -top-20 h-72 w-72 rounded-full bg-[#f4c82e]/60 blur-2xl" />
-            <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[#8bc4c4]/45 blur-3xl" />
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1A365D]/5 text-[#1A365D]">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h4 className="font-[var(--font-geist)] text-xl font-semibold tracking-[-0.04em] text-[#1E293B]">{title}</h4>
+                <p className="mt-3 text-sm leading-6 text-[#475569]">{description}</p>
+              </motion.article>
+            ))}
+          </div>
+        </section>
 
-            <div className="relative flex h-full min-h-[360px] flex-col justify-between gap-5 rounded-[1.5rem] border border-white/70 bg-white/55 p-5 backdrop-blur-sm sm:p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#65717d]">Bookspot live</p>
-                  <p className="mt-2 font-serif text-2xl text-[#101827]">Today on campus</p>
-                </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#101827] text-white">
-                  <CalendarDays size={18} />
-                </div>
+        <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-[30px] border border-[#1A365D]/10 bg-[#1A365D] text-white">
+            <div className="grid gap-10 px-5 py-8 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10 lg:py-10">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">How it works</p>
+                <h3 className="mt-3 font-[var(--font-geist)] text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+                  A smoother booking flow from first search to final approval.
+                </h3>
               </div>
 
-              <div className="relative mx-auto w-full max-w-sm rounded-[1.5rem] bg-[#172235] p-6 text-white shadow-[0_24px_40px_rgba(16,24,39,0.24)] sm:p-7">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white/65">Available now</span>
-                  <span className="flex items-center gap-1.5 text-xs text-[#f4c82e]">
-                    <span className="h-2 w-2 rounded-full bg-[#f4c82e]" /> Live
-                  </span>
-                </div>
-                <div className="mt-6 flex items-end justify-between gap-3">
-                  <div>
-                    <p className="font-serif text-4xl">Seminar Hall</p>
-                    <p className="mt-2 flex items-center gap-1 text-xs text-white/55">
-                      <MapPin size={12} /> Main Block · 120 seats
-                    </p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {processSteps.map((step, index) => (
+                  <div key={step.title} className="rounded-[20px] border border-white/10 bg-white/5 p-4">
+                    <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#D4AF37] text-sm font-bold text-[#1E293B]">
+                      {index + 1}
+                    </div>
+                    <h4 className="font-[var(--font-geist)] text-lg font-semibold text-white">{step.title}</h4>
+                    <p className="mt-2 text-sm leading-6 text-slate-200">{step.text}</p>
                   </div>
-                  <div className="shrink-0 rounded-xl bg-white/10 p-3">
-                    <Search size={20} className="text-[#f4c82e]" />
-                  </div>
-                </div>
-                <div className="mt-7 grid grid-cols-4 gap-2.5">
-                  {["09:00", "11:30", "14:00", "16:30"].map((time, index) => (
-                    <div
-                      key={time}
-                      className={`rounded-lg px-2 py-2.5 text-center text-[10px] ${index === 1 ? "bg-[#f4c82e] font-bold text-[#101827]" : "bg-white/10 text-white/70"
-                        }`}
-                    >
-                      {time}
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+          <div className="rounded-[30px] border border-[#1A365D]/10 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.04)] sm:p-8">
+            <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#64748B]">For students and organizers</p>
+                <h3 className="mt-3 font-[var(--font-geist)] text-3xl font-semibold tracking-[-0.05em] text-[#1E293B] sm:text-4xl">
+                  Everything needed to plan, request, and manage campus spaces.
+                </h3>
+                <div className="mt-6 space-y-4">
+                  {[
+                    "Clear venue filters for capacity, location, and resources",
+                    "Approval visibility for admin and student workflows",
+                    "Responsive booking experience across mobile, tablet, and desktop",
+                  ].map((point) => (
+                    <div key={point} className="flex items-start gap-3 rounded-2xl bg-[#F8F8F8] p-3">
+                      <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#D4AF37]/20 text-[#1A365D]">
+                        <Check className="h-3.5 w-3.5" />
+                      </span>
+                      <p className="text-sm leading-6 text-[#475569]">{point}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  <span className="h-8 w-8 rounded-full border-2 border-white bg-[#e5a98f]" />
-                  <span className="h-8 w-8 rounded-full border-2 border-white bg-[#779ba8]" />
-                  <span className="h-8 w-8 rounded-full border-2 border-white bg-[#bd8976]" />
+              <div className="rounded-[24px] border border-[#1A365D]/10 bg-[#F8F8F8] p-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#64748B]">Campus overview</p>
+                    <p className="mt-2 font-[var(--font-geist)] text-3xl font-semibold tracking-[-0.05em] text-[#1E293B]">24 spaces</p>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1A365D] text-white">
+                    <Users2 className="h-5 w-5" />
+                  </div>
                 </div>
-                <p className="text-xs font-medium text-[#65717d]">42 spaces checked this morning</p>
+
+                <div className="mt-6 space-y-3">
+                  {[
+                    { label: "Lecture halls", value: "8" },
+                    { label: "Labs", value: "6" },
+                    { label: "Event rooms", value: "5" },
+                    { label: "Sports spaces", value: "5" },
+                  ].map((item) => (
+                    <div key={item.label}>
+                      <div className="mb-2 flex items-center justify-between text-sm text-[#475569]">
+                        <span>{item.label}</span>
+                        <span className="font-semibold text-[#1E293B]">{item.value}</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-[#E2E8F0]">
+                        <div
+                          className="h-full rounded-full bg-[#D4AF37]"
+                          style={{ width: `${(Number(item.value) / 8) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            <div className="absolute right-4 top-36 rounded-2xl bg-white px-4 py-3 shadow-xl sm:right-2 sm:top-40">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#101827]">
-                <Check size={14} className="rounded-full bg-[#c7e7d0] p-0.5 text-[#22834b]" /> Request approved
-              </div>
-              <p className="mt-1 text-[10px] text-[#77808c]">Room 204 · just now</p>
-            </div>
-
-            <div className="absolute bottom-20 left-4 rounded-2xl bg-[#f4c82e] px-4 py-3 text-[#101827] shadow-xl sm:left-2">
-              <p className="text-[10px] font-bold uppercase tracking-[0.12em]">Next up</p>
-              <p className="mt-1 flex items-center gap-1 text-sm font-semibold">
-                <Clock3 size={14} /> Lab 2 · 3:00 PM
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      
+          </div>
+        </section>
+      </div>
     </main>
   );
+}
+
+function SearchIcon(props: React.ComponentProps<typeof Search>) {
+  const { className, ...rest } = props;
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...rest} className={className}><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" strokeLinecap="round" /></svg>;
+}
+
+function CalendarIcon(props: React.ComponentProps<typeof CalendarDays>) {
+  const { className, ...rest } = props;
+  return <CalendarDays {...rest} className={className} />;
+}
+
+function ShieldIcon(props: React.ComponentProps<typeof ShieldCheck>) {
+  const { className, ...rest } = props;
+  return <ShieldCheck {...rest} className={className} />;
 }

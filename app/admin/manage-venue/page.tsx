@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Building2, ImageIcon, MapPin, Plus, Search, Trash2, Users } from "lucide-react";
-import Navbar from "../../../components/navbar";
 
 type Venue = {
   _id: string;
@@ -89,7 +88,6 @@ export default function ManageVenuePage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#171A2B]">
-      <Navbar />
       <div className="mx-auto max-w-7xl px-6 py-10 sm:px-8 sm:py-14">
         <Link href="/admin" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-[#101622]"><ArrowLeft size={16} /> Back to admin dashboard</Link>
 
