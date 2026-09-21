@@ -10,7 +10,6 @@ import {
   Search,
   Users,
 } from "lucide-react";
-import Navbar from "../../components/navbar";
 
 type Venue = {
   _id: string;
@@ -81,8 +80,6 @@ export default function VenuePage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#171A2B]">
-      <Navbar />
-
       <section className="border-b border-black/10 bg-[#101622] text-white">
         <div className="mx-auto max-w-7xl px-6 pb-12 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
           <div className="max-w-2xl">

@@ -3,8 +3,6 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Building2, LockKeyhole, ShieldCheck, UserRound } from "lucide-react";
-import Navbar from "../../../components/navbar";
-import { NoiseTexture } from "@/components/ui/noise-texture";
 
 type UserRole = "student" | "admin";
 
@@ -81,8 +79,6 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-[#f4f5f2] px-4 pb-10 text-[#101622] sm:px-6">
-      <NoiseTexture />
-      <Navbar />
       <div className="mx-auto flex min-h-[calc(100vh-112px)] max-w-5xl items-center py-10">
         <div className="grid w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_70px_rgba(16,22,34,0.12)] lg:grid-cols-[0.9fr_1.1fr]">
           <section className="relative hidden min-h-[620px] flex-col justify-between overflow-hidden bg-[#101622] p-10 text-white lg:flex">

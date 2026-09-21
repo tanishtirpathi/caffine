@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Mail, Plus, Search, ShieldCheck, Trash2, UserPlus, Users, X } from "lucide-react";
-import Navbar from "../../../components/navbar";
 
 type User = {
   _id: string;
@@ -107,7 +106,6 @@ export default function ManageUsersPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#171A2B]">
-      <Navbar />
       <div className="mx-auto max-w-7xl px-6 py-10 sm:px-8 sm:py-14">
         <Link href="/admin" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-[#101622]"><ArrowLeft size={16} /> Back to admin dashboard</Link>
         <header className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#B28713]">User management</p><h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">Manage campus accounts.</h1><p className="mt-3 max-w-2xl text-slate-500">Create accounts for students or administrators, search the directory, and remove accounts that should no longer have access.</p></div><button type="button" onClick={() => { setShowForm((current) => !current); setError(""); }} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#E8B928] px-4 py-3 text-sm font-semibold text-[#101622] transition hover:bg-[#d9ab1e]"><UserPlus size={16} /> {showForm ? "Close form" : "Add user"}</button></header>

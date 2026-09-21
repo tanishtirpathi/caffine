@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, CalendarDays, Clock3, MapPin } from "lucide-react";
-import Navbar from "../../components/navbar";
 
 type Booking = {
   _id: string;
@@ -47,7 +46,6 @@ export default function CalendarPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#171A2B]">
-      <Navbar />
       <div className="mx-auto max-w-6xl px-6 py-10 sm:px-8 sm:py-14">
         <Link href="/venue" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-[#101622]"><ArrowLeft size={16} /> Browse venues</Link>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

@@ -1,28 +1,29 @@
 export default function Name({ scale = 0.5, light = false }: { scale?: number; light?: boolean }) {
-  // Define base measurements in pixels or rems
-  const baseFontSize = 48; // equivalent to text-5xl (3rem)
-  const baseDotSize = 28;  // equivalent to w-7 h-7 (1.75rem)
+  const baseFontSize = 48;
+  const baseDotSize = 28;
   const baseLetterSpacing = -2;
 
   return (
-    <div 
-      className={`flex items-center justify-center font-bold ${light ? "text-[#111827]" : "text-white/90"}`}
+    <div
+      className="flex items-center justify-center font-black"
       style={{
         fontSize: `${baseFontSize * scale}px`,
         letterSpacing: `${baseLetterSpacing * scale}px`,
+        color: light ? "#1A365D" : "#1A365D",
       }}
     >
       <h2 className="flex items-center leading-none">
         <span>booksp</span>
-        <span 
-          className="rounded-full bg-[#d19d00] "
+        <span
+          className="inline-flex items-center justify-center rounded-full bg-[#D4AF37]"
           style={{
             width: `${baseDotSize * scale}px`,
             height: `${baseDotSize * scale}px`,
-            marginLeft: `${3 * scale}px`,
-            marginRight: `${3 * scale}px`,
-            // Slight optical alignment for the dot based on scale
-            marginTop: `${6 * scale}px`, 
+            marginLeft: `${2.5 * scale}px`,
+            marginRight: `${2.5 * scale}px`,
+            marginTop: `${5 * scale}px`,
+            display: "inline-block",
+            boxShadow: "inset 0 0 0 1px rgba(26,54,93,0.08)",
           }}
         />
         <span>t</span>

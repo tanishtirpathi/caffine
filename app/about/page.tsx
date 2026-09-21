@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowUpRight, Code2, Database, Search, Users } from "lucide-react";
-import Navbar from "../../components/navbar";
 
 const contributions = [
   ["01", <Database key="foundations" size={19} />, "Reliable foundations", "We build the systems that keep venue information, accounts, and booking requests dependable."],
@@ -17,7 +16,6 @@ const team = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#F5FAFF] text-[#102A43]">
-      <Navbar />
       <article>
         <header className="mx-auto max-w-4xl px-6 pb-16 pt-24 sm:px-10 sm:pt-32">
           <p className="text-sm font-medium text-[#1677FF]">About Bookspot</p>
@@ -33,8 +31,6 @@ export default function AboutPage() {
         <section className="border-y border-[#D7E4F5] bg-[#F2F8FF]"><div className="mx-auto max-w-4xl px-6 py-20 sm:px-10 sm:py-24"><SectionHeading eyebrow="How we contribute" title="Three perspectives, one useful product." /><p className="mt-6 max-w-2xl leading-7 text-slate-600">Our roles are different by design. Together, they help us balance technical reliability, real user needs, and a thoughtful experience.</p><div className="mt-12 divide-y divide-[#D7E4F5] border-y border-[#D7E4F5]">{contributions.map(([number, icon, title, description]) => <div key={title} className="grid gap-4 py-7 sm:grid-cols-[48px_220px_1fr] sm:items-start"><div className="grid size-10 place-items-center rounded-full bg-[#EAF3FF] text-[#1677FF]">{icon}</div><div className="flex items-baseline justify-between gap-4 sm:contents"><h3 className="text-lg font-semibold text-[#102A43]">{title}</h3><span className="text-sm font-medium text-slate-400">{number}</span></div><p className="leading-7 text-slate-600 sm:col-start-3">{description}</p></div>)}</div></div></section>
 
         <section className="mx-auto max-w-4xl px-6 py-20 sm:px-10 sm:py-24"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><SectionHeading eyebrow="Meet the team" title="The people behind the work." /><div className="flex items-center gap-2 text-sm text-slate-500"><Users size={17} /> Built together, for campus communities.</div></div><div className="mt-12 grid gap-4 sm:grid-cols-3">{team.map(([initials, name, role, contribution]) => <article key={name} className="border-t border-[#D7E4F5] pt-5"><div className="grid size-12 place-items-center rounded-full bg-[#102A43] text-sm font-semibold text-[#75B8FF]">{initials}</div><h3 className="mt-6 text-xl font-semibold text-[#102A43]">{name}</h3><p className="mt-1 text-sm font-medium text-[#1677FF]">{role}</p><p className="mt-5 text-sm leading-7 text-slate-600">{contribution}</p></article>)}</div></section>
-
-        <footer className="border-t border-[#D7E4F5] bg-white"><div className="mx-auto flex max-w-4xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-10"><p>© 2026 Bookspot</p><p>Smart campus resource management</p></div></footer>
       </article>
     </main>
   );

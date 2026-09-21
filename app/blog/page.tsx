@@ -10,7 +10,6 @@ import {
   Server,
   Zap,
 } from "lucide-react";
-import Navbar from "../../components/navbar";
 
 const stack = [
   {
@@ -78,8 +77,6 @@ const implementationSteps = [
 export default function TechnicalBlogPage() {
   return (
     <main className="min-h-screen bg-[#F5FAFF] text-[#102A43]">
-      <Navbar />
-
       <article>
         <header className="mx-auto max-w-4xl px-6 pb-16 pt-24 sm:px-10 sm:pt-32">
           <p className="text-sm font-medium text-[#1677FF]">Our case study , Bookspot</p>
@@ -260,15 +257,6 @@ export default function TechnicalBlogPage() {
             </p>
           </div>
         </section>
-
-
-
-        <footer className="border-t border-[#D7E4F5] bg-white">
-          <div className="mx-auto flex max-w-4xl flex-col gap-2 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-10">
-            <p>Bookspot / Technical blog</p>
-            <p>Built for clearer campus coordination.</p>
-          </div>
-        </footer>
       </article>
     </main>
   );
