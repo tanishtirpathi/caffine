@@ -51,8 +51,13 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6)}
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: hidden;
 }
 
 :root {
