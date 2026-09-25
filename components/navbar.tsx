@@ -1,28 +1,18 @@
 "use client";
 
-import {
-  CircleHelp,
-  House,
-  Calendar,
-  Info,
-  LayoutDashboard,
-  Menu,
-  Newspaper,
-  UserRound,
-  X,
-} from "lucide-react";
+import { Menu, UserRound, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Name from "./name";
 
 const navigation = [
-  { href: "/", label: "Home", icon: House },
-  { href: "/venue", label: "Venues", icon: LayoutDashboard },
-  { href: "/calendar", label: "Calendar", icon: Calendar },
-  { href: "/about", label: "About", icon: Info },
-  { href: "/blog", label: "Blog", icon: Newspaper },
-  { href: "/faqs", label: "FAQs", icon: CircleHelp },
+  { href: "/", label: "Home" },
+  { href: "/venue", label: "Venues" },
+  { href: "/calendar", label: "Calendar" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/faqs", label: "FAQs" },
 ];
 
 export default function Navbar({ light = false }: { light?: boolean }) {
@@ -54,127 +44,128 @@ export default function Navbar({ light = false }: { light?: boolean }) {
     };
   }, [pathname]);
 
-  const shellClasses = light
-    ? "border-[#1A365D]/10 bg-white/85 shadow-[0_10px_35px_rgba(15,23,42,0.06)]"
-    : "border-[#1A365D]/10 bg-white/80 shadow-[0_12px_35px_rgba(15,23,42,0.06)]";
-
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-      <div className={`mx-auto max-w-7xl rounded-full border backdrop-blur-xl ${shellClasses}`}>
-        <div className="flex h-16 items-center justify-between gap-4 px-4 sm:px-5">
-          <Link
-            href={homeHref}
-            onClick={closeMenu}
-            className="flex items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
-          >
-            <Name scale={0.72} light={light} />
-          </Link>
+    <header className="sticky top-0 z-50 border-b border-[#E2E8F0] bg-white/85 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <Link
+          href={homeHref}
+          onClick={closeMenu}
+          className="flex shrink-0 items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
+          aria-label="Bookspot home"
+        >
+          <Name scale={0.62} light={light} />
+        </Link>
 
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
-            {navigation.map(({ href, label, icon: Icon }) => (
-              <NavLink
-                key={href}
-                href={href === "/" ? homeHref : href}
-                label={href === "/" && user ? "Dashboard" : label}
-                icon={<Icon size={15} />}
-                active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
-                light={light}
-              />
-            ))}
-          </nav>
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+          {navigation.map(({ href, label }) => (
+            <NavLink
+              key={href}
+              href={href === "/" ? homeHref : href}
+              label={href === "/" && user ? "Dashboard" : label}
+              active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
+            />
+          ))}
+        </nav>
 
-          <div className="flex items-center gap-2">
-            {user ? (
-              <div className="hidden items-center gap-2 sm:flex">
-                <Link
-                  href="/venue"
-                  className="inline-flex items-center rounded-full bg-[#1A365D] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#132848] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
-                >
-                  Book a venue
-                </Link>
-                <Link
-                  href="/profile"
-                  title={`Open ${user.name}'s profile`}
-                  aria-label={`Open ${user.name}'s profile`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#1A365D]/10 bg-[#F8F8F8] text-[#1E293B] transition hover:bg-[#EEF3F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
-                >
-                  <UserRound size={18} />
-                </Link>
-              </div>
-            ) : (
-              <div className="hidden items-center gap-2 sm:flex">
-                <Link
-                  href="/venue"
-                  className="rounded-full border border-[#1A365D]/10 bg-white px-4 py-2 text-sm font-semibold text-[#1A365D] transition hover:bg-[#F8F8F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
-                >
-                  Explore venues
-                </Link>
-                <Link
-                  href="/auth/login"
-                  className="rounded-full bg-[#1A365D] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#132848] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2"
-                >
-                  Sign in
-                </Link>
-              </div>
-            )}
-
-            <button
-              type="button"
-              aria-expanded={isMenuOpen}
-              aria-controls="mobile-navigation"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              onClick={() => setIsMenuOpen((open) => !open)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#1A365D]/10 bg-white text-[#1E293B] transition hover:bg-[#F8F8F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2 md:hidden"
-            >
-              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
+        <div className="hidden items-center gap-3 md:flex">
+          {user ? (
+            <>
+              <Link
+                href="/venue"
+                className="text-sm font-medium text-[#475569] transition hover:text-[#111827]"
+              >
+                Book a venue
+              </Link>
+              <Link
+                href="/profile"
+                title={`Open ${user.name}'s profile`}
+                aria-label={`Open ${user.name}'s profile`}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E2E8F0] bg-[#F8FAFC] text-[#1E293B] transition hover:border-[#CBD5E1] hover:bg-[#F1F5F9]"
+              >
+                <UserRound size={16} />
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/venue"
+                className="text-sm font-medium text-[#475569] transition hover:text-[#111827]"
+              >
+                Explore venues
+              </Link>
+              <Link
+                href="/auth/login"
+                className="inline-flex items-center justify-center rounded-full bg-[#111827] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1F2937]"
+              >
+                Sign in
+              </Link>
+            </>
+          )}
         </div>
 
-        <div
-          id="mobile-navigation"
-          className={`${isMenuOpen ? "block" : "hidden"} border-t border-[#1A365D]/10 md:hidden`}
+        <button
+          type="button"
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setIsMenuOpen((open) => !open)}
+          className="relative z-50 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E2E8F0] bg-white text-[#111827] transition hover:bg-[#F8FAFC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2 md:hidden"
+          style={{ touchAction: "manipulation" }}
         >
-          <nav className="grid gap-1 px-4 py-3" aria-label="Mobile navigation">
-            {navigation.map(({ href, label, icon: Icon }) => (
-              <MobileNavLink
-                key={href}
-                href={href === "/" ? homeHref : href}
-                label={href === "/" && user ? "Dashboard" : label}
-                icon={<Icon size={16} />}
-                active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
-                onClick={closeMenu}
-                light={light}
-              />
-            ))}
+          {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </div>
+
+      <div
+        id="mobile-navigation"
+        className={`${
+          isMenuOpen ? "visible opacity-100" : "invisible opacity-0"
+        } border-t border-[#E2E8F0] bg-white transition-all duration-200 ease-out md:hidden`}
+        aria-hidden={!isMenuOpen}
+      >
+        <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3" aria-label="Mobile navigation">
+          {navigation.map(({ href, label }) => (
+            <MobileNavLink
+              key={href}
+              href={href === "/" ? homeHref : href}
+              label={href === "/" && user ? "Dashboard" : label}
+              active={Boolean(isActive(pathname, href === "/" ? homeHref : href))}
+              onClick={closeMenu}
+            />
+          ))}
+
+          <div className="mt-2 border-t border-[#E2E8F0] pt-3">
             {!user ? (
-              <div className="mt-2 grid gap-2 border-t border-[#1A365D]/10 pt-3">
-                <Link
-                  href="/auth/login"
-                  onClick={closeMenu}
-                  className="inline-flex items-center justify-center rounded-full bg-[#1A365D] px-4 py-2.5 text-sm font-semibold text-white"
-                >
-                  Sign in
-                </Link>
+              <div className="grid gap-2">
                 <Link
                   href="/venue"
                   onClick={closeMenu}
-                  className="inline-flex items-center justify-center rounded-full border border-[#1A365D]/10 bg-white px-4 py-2.5 text-sm font-semibold text-[#1A365D]"
+                  className="inline-flex items-center justify-center rounded-full border border-[#E2E8F0] bg-white px-4 py-2.5 text-sm font-medium text-[#111827]"
+                  style={{ touchAction: "manipulation" }}
                 >
                   Explore venues
+                </Link>
+                <Link
+                  href="/auth/login"
+                  onClick={closeMenu}
+                  className="inline-flex items-center justify-center rounded-full bg-[#111827] px-4 py-2.5 text-sm font-semibold text-white"
+                  style={{ touchAction: "manipulation" }}
+                >
+                  Sign in
                 </Link>
               </div>
             ) : (
               <Link
                 href="/profile"
                 onClick={closeMenu}
-                className="mt-2 inline-flex items-center justify-center rounded-full border border-[#1A365D]/10 bg-[#F8F8F8] px-4 py-2.5 text-sm font-semibold text-[#1E293B]"
+                className="inline-flex w-full items-center justify-center rounded-full border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-2.5 text-sm font-medium text-[#111827]"
+                style={{ touchAction: "manipulation" }}
               >
                 Open profile
               </Link>
             )}
-          </nav>
-        </div>
+          </div>
+        </nav>
       </div>
     </header>
   );
@@ -184,31 +175,14 @@ function isActive(pathname: string | null, href: string): boolean {
   return pathname !== null && (href === "/" ? pathname === href : pathname.startsWith(href));
 }
 
-function NavLink({
-  href,
-  icon,
-  label,
-  active,
-  light,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-  light: boolean;
-}) {
+function NavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A365D] focus-visible:ring-offset-2 ${
-        active
-          ? "bg-[#1A365D] text-white shadow-[0_8px_20px_rgba(26,54,93,0.18)]"
-          : light
-            ? "text-[#475569] hover:bg-[#F8F8F8] hover:text-[#1E293B]"
-            : "text-[#475569] hover:bg-[#F8F8F8] hover:text-[#1E293B]"
+      className={`rounded-full px-3 py-2 text-sm font-medium transition ${
+        active ? "bg-[#F3F4F6] text-[#111827]" : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#111827]"
       }`}
     >
-      {icon}
       {label}
     </Link>
   );
@@ -216,32 +190,23 @@ function NavLink({
 
 function MobileNavLink({
   href,
-  icon,
   label,
   active,
   onClick,
-  light,
 }: {
   href: string;
-  icon: React.ReactNode;
   label: string;
   active: boolean;
   onClick: () => void;
-  light: boolean;
 }) {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className={`flex min-h-11 items-center gap-3 rounded-full px-3 py-2 text-sm font-medium transition active:scale-[0.98] ${
-        active
-          ? "bg-[#1A365D] text-white"
-          : light
-            ? "text-[#475569] hover:bg-[#F8F8F8]"
-            : "text-[#475569] hover:bg-[#F8F8F8]"
+      className={`rounded-full px-3 py-2.5 text-sm font-medium transition ${
+        active ? "bg-[#111827] text-white" : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#111827]"
       }`}
     >
-      {icon}
       {label}
     </Link>
   );
